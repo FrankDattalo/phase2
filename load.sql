@@ -126,8 +126,38 @@ create table Event (
 );
 
 create table Can_Reserve (
+	EID int not null,
+	RTName int not null,
+	primary key(EID, RTname)
+);
 
+create table Reserves_For_Event (
+	CID int not null,
+	RNumber int not null,
+	EID int not null,
+	primary key(CID, RNumber, EID)
+);
 
+create table Reserves (
+	BID int not null,
+	RNumber int not null,
+	EID int not null,
+	primary key(BID, RNmber, EID)
+);
+
+create table Supply (
+	itemName varchar(15) not null,
+	description text not null,
+	price int not null,
+	primary key (itemName)
+);
+
+create table Food (
+	itemName varchar(15) not null,
+	description text not null,
+	perishDate date not null,
+	price int not null,
+	primary key (itemName)
 );
 
 -- Step 2. Insert Values into Tables
