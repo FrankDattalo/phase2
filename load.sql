@@ -185,22 +185,22 @@ create table Purchases_Food (
 	invoice int not null,
 	quantity int not null,
 	purchaseDate date not null,
-	fulfillmentDate int not null,
+	fulfillmentDate date not null,
 	BID int not null,
 	SID int not null,
-	Item int not null,
-	primary key (BID, SID, Item)
+	Item varchar(15) not null,
+	primary key (invoice, BID, SID, Item)
 );
 
 create table Purchases_Vehicle (
 	invoice int not null,
 	quantity int not null,
 	purchaseDate date not null,
-	fulfillmentDate int not null,
+	fulfillmentDate date not null,
 	BID int not null,
 	SID int not null,
 	PlateNo varchar(15) not null,
-	primary key (BID, SID, PlateNo)
+	primary key (invoice, BID, SID, PlateNo)
 );
 
 -- Step 2. Insert Values into Tables
