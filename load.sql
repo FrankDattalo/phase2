@@ -3,8 +3,8 @@
 create table Branch (
 	branchId int not null,
 	phoneNo varchar(15) not null,
-	address varchar(30) not null,
-	RName int not null,
+	address varchar(50) not null,
+	RName varchar(30) not null,
 	primary key (branchId)
 );
 
@@ -19,7 +19,7 @@ create table Region (
 
 create table Corporate_Office (
 	officeId int not null,
-	address varchar(30) not null,
+	address varchar(50) not null,
 	phoneNo varchar(10) not null,
 	openHours time not null,
 	closeHours time not null,
@@ -32,7 +32,7 @@ create table Worker (
 	mInit char(1) not null,
 	lName varchar(15) not null,
 	bDate date not null,
-	address varchar(30) not null,
+	address varchar(50) not null,
 	sex char(1) not null,
 	salary int not null,
 	startDate date not null,
@@ -205,13 +205,25 @@ create table Purchases_Vehicle (
 
 -- Step 2. Insert Values into Tables
 insert into Region (name,description,timeZone,noOfBranches,COfficeId) values 
-	('pacific','Pacific United States region','PST',8,1),
-	('mountain','Mountain United States region','MST',3,2),
-	('central','Central United States region','CST',6,3),
-	('southeast','Southeastern United States region','EST',5,4),
-	('northeast','Northeastern United States region','EST',3,5),
-	('alaska','Alaskan region','AKST',5,6),
-	('hawaii','Hawaiian region','HST',5,7);
+	('pacific',		'Pacific United States region',		'PST',	2,	1),
+	('mountain',	'Mountain United States region',	'MST',	1,	2),
+	('central',		'Central United States region',		'CST',	3,	3),
+	('southeast',	'Southeastern United States region','EST',	1,	4),
+	('northeast',	'Northeastern United States region','EST',	1,	5),
+	('alaska',		'Alaskan region',					'AKST',	1,	6),
+	('hawaii',		'Hawaiian region',					'HST',	1,	7);
+
+insert into Branch (branchId, phoneNo, address, RName) values
+	(1,	'1-832-205-4909',	'784-1888 Blandit Rd.',					'pacific'),
+	(2,	'1-398-463-4079',	'P.O. Box 736, 6351 Accumsan Avenue',	'southeast'),
+	(3,	'1-216-372-3629',	'846-5103 Et Street',					'alaska'),
+	(4,	'1-268-387-3145',	'426-5159 Ante. Ave',					'hawaii'),
+	(5,	'1-477-786-9180',	'P.O. Box 925, 4186 Ipsum. Road',		'central'),
+	(6,	'1-862-279-5572',	'Ap #402-5617 Mauris Av.',				'central'),
+	(7,	'1-387-299-1446',	'P.O. Box 832, 5780 Massa. Rd.',		'northeast'),
+	(8,	'1-696-339-3094',	'Ap #596-1776 Sed Avenue',				'mountain'),
+	(9,	'1-632-945-6813',	'608-9541 Imperdiet Av.',				'pacific'),
+	(10,'1-354-771-2751',	'790 Dui, Street',						'central');
 
 -- Step 3. Update Tables to Add Constraints
 
