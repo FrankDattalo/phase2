@@ -14,7 +14,6 @@ create table Region (
 	name varchar(15) not null,
 	description text not null,
 	timeZone char(4) not null,
-	noOfBranches int not null,
 	COfficeID int not null,
 	primary key (name)
 );
@@ -206,15 +205,6 @@ create table Purchases_Vehicle (
 );
 
 -- Step 2. Insert Values into Tables
-insert into Region (name,description,timeZone,noOfBranches,COfficeId) values 
-	('pacific',		'Pacific United States region',		'PST',	2,	1),
-	('mountain',	'Mountain United States region',	'MST',	1,	2),
-	('central',		'Central United States region',		'CST',	3,	3),
-	('southeast',	'Southeastern United States region','EST',	1,	4),
-	('northeast',	'Northeastern United States region','EST',	1,	5),
-	('alaska',		'Alaskan region',					'AKST',	1,	6),
-	('hawaii',		'Hawaiian region',					'HST',	1,	7);
-
 insert into Branch (branchId, phoneNo, address, RName) values
 	(1,	'1-832-205-4909',	'784-1888 Blandit Rd.',					'pacific'),
 	(2,	'1-398-463-4079',	'P.O. Box 736, 6351 Accumsan Avenue',	'southeast'),
@@ -227,6 +217,15 @@ insert into Branch (branchId, phoneNo, address, RName) values
 	(9,	'1-632-945-6813',	'608-9541 Imperdiet Av.',				'pacific'),
 	(10,'1-354-771-2751',	'790 Dui, Street',						'central');
 
+insert into Region (name,description,timeZone,COfficeId) values 
+	('pacific',		'Pacific United States region',		'PST',	1),
+	('mountain',	'Mountain United States region',	'MST',	2),
+	('central',		'Central United States region',		'CST',	3),
+	('southeast',	'Southeastern United States region','EST',	4),
+	('northeast',	'Northeastern United States region','EST',	5),
+	('alaska',		'Alaskan region',					'AKST',	6),
+	('hawaii',		'Hawaiian region',					'HST',	7);
+
 insert into Corporate_Office ([officeId],[address],[phoneNo],[openHours],[closeHours]) 
 values
 (1,	'Ap #965-8581 Tincidunt Avenue',	'1-643-926-9359',	'08:00:00',	'16:00:00'),
@@ -235,10 +234,7 @@ values
 (4,	'479-6636 Condimentum. Street',		'1-149-260-2874',	'08:00:00',	'16:00:00'),
 (5,	'Ap #867-9390 Lacinia St.',			'1-373-762-8447',	'08:00:00',	'16:00:00'),
 (6,	'557-5143 Id, Ave',					'1-145-578-4802',	'08:00:00',	'16:00:00'),
-(7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00'),
-(8,	'4682 Felis. Rd.',					'1-143-224-9818',	'08:00:00',	'16:00:00'),
-(9,	'P.O. Box 405, 1415 Mi Street',		'1-328-896-6292',	'08:00:00',	'16:00:00'),
-(10,'8999 Parturient Street',			'1-972-846-5302',	'08:00:00',	'16:00:00');
+(7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00');
 
 
 -- Step 3. Update Tables to Add Constraints
