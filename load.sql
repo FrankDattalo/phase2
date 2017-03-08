@@ -68,8 +68,8 @@ create table Room (
 	RTName varchar(15) not null,
 	CID int not null,
 	RNumber int not null, -- TODO: Dont know what this is?
-	startTime timestamp not null,
-	endTime timestamp not null,
+	startTime datetime not null,
+	endTime datetime not null,
 	primary key (roomNo, BID)
 );
 
@@ -142,7 +142,7 @@ create table Reserves (
 	BID int not null,
 	RNumber int not null,
 	EID int not null,
-	primary key(BID, RNmber, EID)
+	primary key(BID, RNumber, EID)
 );
 
 create table Supply (
@@ -162,7 +162,8 @@ create table Food (
 
 -- Step 2. Insert Values into Tables
 
--- Step 3. Update Tables to Add Constrains
+
+-- Step 3. Update Tables to Add Constraints
 
 -- Step 4. Add Triggers To Tables
 
