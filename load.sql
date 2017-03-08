@@ -1,5 +1,7 @@
 -- Step 1. Create Tables
 
+set DateFormat MDY;
+
 create table Branch (
 	branchId int not null,
 	phoneNo varchar(15) not null,
@@ -20,7 +22,7 @@ create table Region (
 create table Corporate_Office (
 	officeId int not null,
 	address varchar(50) not null,
-	phoneNo varchar(10) not null,
+	phoneNo varchar(15) not null,
 	openHours time not null,
 	closeHours time not null,
 	primary key (officeId)
@@ -217,6 +219,20 @@ values
 (8,	'1-696-339-3094',	'Ap #596-1776 Sed Avenue',				'Ontario'),
 (9,	'1-632-945-6813',	'608-9541 Imperdiet Av.',				'New South Wales'),
 (10,'1-354-771-2751',	'790 Dui, Street',						'BC');
+
+
+insert into Corporate_Office ([officeId],[address],[phoneNo],[openHours],[closeHours]) 
+values
+(1,	'Ap #965-8581 Tincidunt Avenue',	'1-643-926-9359',	'08:00:00',	'16:00:00'),
+(2,	'Ap #548-6014 Velit. Street',		'1-388-462-2782',	'08:00:00',	'16:00:00'),
+(3,	'Ap #266-5468 Porttitor Street',	'1-770-824-3744',	'08:00:00',	'16:00:00'),
+(4,	'479-6636 Condimentum. Street',		'1-149-260-2874',	'08:00:00',	'16:00:00'),
+(5,	'Ap #867-9390 Lacinia St.',			'1-373-762-8447',	'08:00:00',	'16:00:00'),
+(6,	'557-5143 Id, Ave',					'1-145-578-4802',	'08:00:00',	'16:00:00'),
+(7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00'),
+(8,	'4682 Felis. Rd.',					'1-143-224-9818',	'08:00:00',	'16:00:00'),
+(9,	'P.O. Box 405, 1415 Mi Street',		'1-328-896-6292',	'08:00:00',	'16:00:00'),
+(10,'8999 Parturient Street',			'1-972-846-5302',	'08:00:00',	'16:00:00');
 
 
 -- Step 3. Update Tables to Add Constraints
