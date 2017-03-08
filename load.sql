@@ -226,15 +226,24 @@ insert into Region (name,description,timeZone,COfficeId) values
 	('alaska',		'Alaskan region',					'AKST',	6),
 	('hawaii',		'Hawaiian region',					'HST',	7);
 
-insert into Corporate_Office ([officeId],[address],[phoneNo],[openHours],[closeHours]) 
-values
-(1,	'Ap #965-8581 Tincidunt Avenue',	'1-643-926-9359',	'08:00:00',	'16:00:00'),
-(2,	'Ap #548-6014 Velit. Street',		'1-388-462-2782',	'08:00:00',	'16:00:00'),
-(3,	'Ap #266-5468 Porttitor Street',	'1-770-824-3744',	'08:00:00',	'16:00:00'),
-(4,	'479-6636 Condimentum. Street',		'1-149-260-2874',	'08:00:00',	'16:00:00'),
-(5,	'Ap #867-9390 Lacinia St.',			'1-373-762-8447',	'08:00:00',	'16:00:00'),
-(6,	'557-5143 Id, Ave',					'1-145-578-4802',	'08:00:00',	'16:00:00'),
-(7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00');
+insert into Corporate_Office ( officeId , address , phoneNo , openHours , closeHours )  values
+	(1,	'Ap #965-8581 Tincidunt Avenue',	'1-643-926-9359',	'08:00:00',	'16:00:00'),
+	(2,	'Ap #548-6014 Velit. Street',		'1-388-462-2782',	'08:00:00',	'16:00:00'),
+	(3,	'Ap #266-5468 Porttitor Street',	'1-770-824-3744',	'08:00:00',	'16:00:00'),
+	(4,	'479-6636 Condimentum. Street',		'1-149-260-2874',	'08:00:00',	'16:00:00'),
+	(5,	'Ap #867-9390 Lacinia St.',			'1-373-762-8447',	'08:00:00',	'16:00:00'),
+	(6,	'557-5143 Id, Ave',					'1-145-578-4802',	'08:00:00',	'16:00:00'),
+	(7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00');
+
+insert into Position( title , description ) values 
+	('Cook',	'This position is great!'),
+	('Worker',	'I love my job!'),
+	('Worker',	'The best position in the company!'),
+	('Manager',	'This position is great!'),
+	('Cook',	'The best position in the company!'),
+	('Worker',	'This position is great!'),
+	('Cook',	'The best position in the company!'),
+	('Cook',	'I love my job!');
 
 -- Step 3. Update Tables to Add Constraints
 
