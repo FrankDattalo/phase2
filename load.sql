@@ -45,7 +45,7 @@ create table Worker (
 
 create table Position (
 	title varchar(20) not null,
-	salary int not null, -- TODO: maybe remove this? Since workers already have a salary
+	-- salary int not null, -- TODO: maybe remove this? Since workers already have a salary
 	description text not null,
 	primary key (title)
 );
@@ -68,7 +68,7 @@ create table Room (
 	BID int not null,
 	RTName varchar(15) not null,
 	CID int not null,
-	RNumber int not null, -- TODO: Dont know what this is?
+	-- RNumber int not null, -- TODO: Dont know what this is?
 	startTime datetime not null,
 	endTime datetime not null,
 	primary key (roomNo, BID)
@@ -235,7 +235,6 @@ values
 (5,	'Ap #867-9390 Lacinia St.',			'1-373-762-8447',	'08:00:00',	'16:00:00'),
 (6,	'557-5143 Id, Ave',					'1-145-578-4802',	'08:00:00',	'16:00:00'),
 (7,	'132-6053 Purus, St.',				'1-774-471-1958',	'08:00:00',	'16:00:00');
-
 
 -- Step 3. Update Tables to Add Constraints
 
