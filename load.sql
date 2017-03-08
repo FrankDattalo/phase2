@@ -160,6 +160,27 @@ create table Food (
 	primary key (itemName)
 );
 
+create table Vehicle (
+	licensePlateNo varchar(7) not null,
+	manufacturer varchar(15) not null,
+	model varchar(15) not null,
+	color varchar(10) not null,
+	type varchar(10) not null,
+	price int not null,
+	primary key (licensePlateNo)
+);
+
+create table Purchases_Supply (
+	invoice int not null,
+	quantity int not null,
+	purchaseDate date not null,
+	fulfillmentDate date,
+	BID int not null,
+	SID int not null,
+	Item varchar(15) not null,
+	primary key (invoice, BID, SID, Item)
+);
+
 -- Step 2. Insert Values into Tables
 
 
