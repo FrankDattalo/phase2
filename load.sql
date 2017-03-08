@@ -49,7 +49,7 @@ create table Position (
 	primary key (title)
 );
 
-create table Faciliy (
+create table Facility (
 	facilityId int not null,
 	description text not null,
 	type varchar(20) not null,
