@@ -11,7 +11,7 @@ create table Branch (
 create table Region (
 	name varchar(15) not null,
 	description text not null,
-	timeZone char(3) not null,
+	timeZone char(4) not null,
 	noOfBranches int not null,
 	COfficeID int not null,
 	primary key (name)
@@ -204,7 +204,14 @@ create table Purchases_Vehicle (
 );
 
 -- Step 2. Insert Values into Tables
-
+insert into Region (name,description,timeZone,noOfBranches,COfficeId) values 
+	('pacific','Pacific United States region','PST',8,1),
+	('mountain','Mountain United States region','MST',3,2),
+	('central','Central United States region','CST',6,3),
+	('southeast','Southeastern United States region','EST',5,4),
+	('northeast','Northeastern United States region','EST',3,5),
+	('alaska','Alaskan region','AKST',5,6),
+	('hawaii','Hawaiian region','HST',5,7);
 
 -- Step 3. Update Tables to Add Constraints
 
