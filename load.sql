@@ -207,16 +207,16 @@ create table Purchases_Vehicle (
 
 insert into Branch (branchId, phoneNo, address, RName) 
 values
-(1, '1-832-205-4909', '784-1888 Blandit Rd.','Ulster'),
-(2,'1-398-463-4079','P.O. Box 736, 6351 Accumsan Avenue','Inverness-shire'),
-(3,'1-216-372-3629','846-5103 Et Street','New York'),
-(4,'1-268-387-3145','426-5159 Ante. Ave','MP'),
-(5,'1-477-786-9180','P.O. Box 925, 4186 Ipsum. Road','Sbg'),
-(6,'1-862-279-5572','Ap #402-5617 Mauris Av.','Mississippi'),
-(7,'1-387-299-1446','P.O. Box 832, 5780 Massa. Rd.','SA'),
-(8,'1-696-339-3094','Ap #596-1776 Sed Avenue','Ontario'),
-(9,'1-632-945-6813','608-9541 Imperdiet Av.','New South Wales'),
-(10,'1-354-771-2751','790 Dui, Street','BC');
+(1,	'1-832-205-4909',	'784-1888 Blandit Rd.',					'Ulster'),
+(2,	'1-398-463-4079',	'P.O. Box 736, 6351 Accumsan Avenue',	'Inverness-shire'),
+(3,	'1-216-372-3629',	'846-5103 Et Street',					'New York'),
+(4,	'1-268-387-3145',	'426-5159 Ante. Ave',					'MP'),
+(5,	'1-477-786-9180',	'P.O. Box 925, 4186 Ipsum. Road',		'Sbg'),
+(6,	'1-862-279-5572',	'Ap #402-5617 Mauris Av.',				'Mississippi'),
+(7,	'1-387-299-1446',	'P.O. Box 832, 5780 Massa. Rd.',		'SA'),
+(8,	'1-696-339-3094',	'Ap #596-1776 Sed Avenue',				'Ontario'),
+(9,	'1-632-945-6813',	'608-9541 Imperdiet Av.',				'New South Wales'),
+(10,'1-354-771-2751',	'790 Dui, Street',						'BC');
 
 
 -- Step 3. Update Tables to Add Constraints
