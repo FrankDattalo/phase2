@@ -61,7 +61,7 @@ create table Facility (
 );
 
 create table Room (
-	roomNo int not null,
+	roomNo int not null, -- TODO: roomNo is unique among branches, but not unique among all rooms (Branch 1 and 3 both have room 101)
 	status varchar(20) not null,
 	cost int not null,
 	maxOccupancy int not null,
@@ -332,6 +332,13 @@ insert into Room_Type (name, description) values
 	('meeting-room',		'for the business calls'),
 	('performance-hall',	'where the band plays'),
 	('expo-center',			'where we lift weights');
+
+insert into Facility (facilityId, description, type, openTime, closeTime, BID) values
+	(1, '8 feet max depth. Diving board.','Swimming Pool','06:00:00','22:00:00', 3),
+	(2, 'Free weights, Machines, 3 Treadmills.','Fitness Center','06:00:00','22:00:00', 3),
+	(3, '5 feet max depth.','Swimming Pool','06:00:00','22:00:00', 1),
+	(4, 'Breakfast diner.','Restaurant','08:00:00','12:00:00', 2),
+	(5, '21 and over bar.','Restaurant','16:00:00','02:00:00', 4);
 
 -- Step 3. Update Tables to Add Constraints
 
