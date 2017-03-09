@@ -115,9 +115,9 @@ primary key (CID, EID)
 
 create table Event (
 eventId int not null,
-name varchar(20) not null,
+name varchar(50) not null,
 price int not null,
-noOfAttendees int not null,
+-- noOfAttendees int not null, -- TODO: this can be removed as we can figure this out through the Attends relationship
 startDate date not null,
 endDate date not null,
 BID int not null,
@@ -126,7 +126,7 @@ primary key (eventId)
 
 create table Can_Reserve (
 EID int not null,
-RTName int not null,
+RTName varchar(30) not null,
 primary key(EID, RTname)
 );
 
@@ -289,6 +289,15 @@ insert into Facility (facilityId , description , type , openTime , closeTime , B
 (29,'5 stars!','Beach','08:00:00', '01:00:00', '1'),
 (30,'Youve never had better','Casino','08:00:00', '01:00:00', '10');
 
+insert into Facility (facilityId, description, type, openTime, closeTime, BID) values
+(31, '8 feet max depth. Diving board.','Swimming Pool','06:00:00','22:00:00', 3),
+(32, 'Free weights, Machines, 3 Treadmills.','Fitness Center','06:00:00','22:00:00', 3),
+(33, '5 feet max depth.','Swimming Pool','06:00:00','22:00:00', 1),
+(34, 'Breakfast diner.','Restaurant','08:00:00','12:00:00', 2),
+(35, '21 and over bar.','Restaurant','16:00:00','02:00:00', 4);
+
+-- TODO fix these nulls for the occupied or reserved rooms & point them to customers & update customer's branches to be the branches from this table, 
+--      also make sure not to break attends relation, the event EID needs to occur at the branch the customer is associated with. maybe we fix this?
 insert into Room (roomNo , status , cost , maxOccupancy , BID , RTName , CID , startTime , endTime) values 
 (9,'occupied',724,6,5, 'expo-center',null, null, null), 
 (17,'open',105,6,2, 'performance-hall',null, null, null), 
@@ -330,13 +339,6 @@ insert into Room_Type (name, description) values
 ('meeting-room','for the business calls'),
 ('performance-hall','where the band plays'),
 ('expo-center','where we lift weights');
-
-insert into Facility (facilityId, description, type, openTime, closeTime, BID) values
-(31, '8 feet max depth. Diving board.','Swimming Pool','06:00:00','22:00:00', 3),
-(32, 'Free weights, Machines, 3 Treadmills.','Fitness Center','06:00:00','22:00:00', 3),
-(33, '5 feet max depth.','Swimming Pool','06:00:00','22:00:00', 1),
-(34, 'Breakfast diner.','Restaurant','08:00:00','12:00:00', 2),
-(35, '21 and over bar.','Restaurant','16:00:00','02:00:00', 4);
 
 insert into Customer (customerId , fName , mInit , lName , cardNo , dateOfBirth , BID) values
 (1,'Yolanda','M','Ross',72139,'04/28/1927','6'),
@@ -557,6 +559,70 @@ insert into Request (requestId , description , type , price , CID) values
 (12,'customer requests breakfast in bed','bed-and-breakfast',30,6),
 (13,'customer requests breakfast in bed','bed-and-breakfast',13,10);
 
+insert into Attends(CID, EID) values
+(18,4),
+(5,19),
+(67,20),
+(98,19),
+(69,13),
+(67,15);
+
+insert into Event(eventId , name , price , startDate , endDate , BID) values
+(1,'Painters United','10','12/13/2016','12/26/2016','4'),
+(2,'The Arnold','50','07/27/2016','11/06/2016','10'),
+(3,'Tech Expo','50','03/30/2016','06/18/2016','10'),
+(4,'Business Extravaganza!','50','05/01/2016','05/12/2016','7'),
+(5,'Business Extravaganza!','100','06/13/2016','10/27/2016','5'),
+(6,'Painters United','25','07/17/2016','10/22/2016','4'),
+(7,'Painters United','0','05/09/2016','06/24/2016','1'),
+(8,'The Arnold','10','12/09/2016','10/08/2016','4'),
+(9,'Painters United','100','05/01/2016','05/03/2016','9'),
+(10,'Foods of the Word!','10','12/06/2016','02/16/2016','4'),
+(11,'Tech Expo','50','03/07/2016','03/07/2016','4'),
+(12,'Foods of the Word!','50','09/03/2016','07/14/2016','1'),
+(13,'Foods of the Word!','0','01/08/2016','04/05/2016','6'),
+(14,'Foods of the Word!','100','06/25/2016','10/05/2016','7'),
+(15,'Painters United','100','01/05/2016','11/01/2016','1'),
+(16,'Business Extravaganza!','10','06/17/2016','05/25/2016','2'),
+(17,'Business Extravaganza!','50','08/15/2016','08/30/2016','9'),
+(18,'Painters United','100','10/19/2016','04/15/2016','4'),
+(19,'Business Extravaganza!','25','07/03/2016','08/29/2016','9'),
+(20,'Painters United','10','04/14/2016','07/12/2016','10'),
+(21,'Foods of the Word!','10','08/15/2016','04/05/2016','2'),
+(22,'Foods of the Word!','25','08/24/2016','05/19/2016','9'),
+(23,'Business Extravaganza!','10','07/29/2016','07/15/2016','6'),
+(24,'Foods of the Word!','100','05/08/2016','10/27/2016','2'),
+(25,'Business Extravaganza!','25','09/07/2016','12/29/2016','7');
+
+insert into Can_Reserve(EID, RTName) values
+(2,'baller'),
+(23,'expo-center'),
+(18,'expo-center'),
+(5,'donald'),
+(5,'performance-hall'),
+(7,'baller'),
+(7,'expo-center'),
+(5,'meeting-room'),
+(10,'donald'),
+(21,'baller');
+
+-- TODO: Reserves for Event Inserts
+
+-- TODO: Reserves
+
+-- TODO: Supplier
+
+-- TODO: Supply
+
+-- TODO: Food
+
+-- TODO: Vehicle
+
+-- TODO: Purchases Supply
+
+-- TODO: Purchases Food
+
+-- TODO: Purchases Vehicle
 
 -- Step 3. Update Tables to Add Constraints
 
