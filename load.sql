@@ -334,11 +334,11 @@ insert into Room_Type (name, description) values
 	('expo-center',			'where we lift weights');
 
 insert into Facility (facilityId, description, type, openTime, closeTime, BID) values
-	(1, '8 feet max depth. Diving board.','Swimming Pool','06:00:00','22:00:00', 3),
-	(2, 'Free weights, Machines, 3 Treadmills.','Fitness Center','06:00:00','22:00:00', 3),
-	(3, '5 feet max depth.','Swimming Pool','06:00:00','22:00:00', 1),
-	(4, 'Breakfast diner.','Restaurant','08:00:00','12:00:00', 2),
-	(5, '21 and over bar.','Restaurant','16:00:00','02:00:00', 4);
+	(31, '8 feet max depth. Diving board.','Swimming Pool','06:00:00','22:00:00', 3),
+	(32, 'Free weights, Machines, 3 Treadmills.','Fitness Center','06:00:00','22:00:00', 3),
+	(33, '5 feet max depth.','Swimming Pool','06:00:00','22:00:00', 1),
+	(34, 'Breakfast diner.','Restaurant','08:00:00','12:00:00', 2),
+	(35, '21 and over bar.','Restaurant','16:00:00','02:00:00', 4);
 
 -- Step 3. Update Tables to Add Constraints
 
