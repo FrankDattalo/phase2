@@ -237,13 +237,8 @@ insert into Corporate_Office ( officeId , address , phoneNo , openHours , closeH
 
 insert into Position( title , description ) values 
 	('Cook',	'This position is great!'),
-	('Worker',	'I love my job!'),
 	('Worker',	'The best position in the company!'),
-	('Manager',	'This position is great!'),
-	('Cook',	'The best position in the company!'),
-	('Worker',	'This position is great!'),
-	('Cook',	'The best position in the company!'),
-	('Cook',	'I love my job!');
+	('Manager',	'This position is great!');
 
 -- Step 3. Update Tables to Add Constraints
 
