@@ -86,8 +86,9 @@ lName varchar(15) not null,
 cardNo int not null,
 dateOfBirth date not null,
 BID int not null,
-primary key (customerId)
-);
+primary key (customerId) -- TODO: might want to consider changing this to BID, customerId.  This way customers must be assoicated with a branch. 
+);					 --	    Any table that references customer as a foreign key will also need to be updated
+
 
 create table Bill (
 billNo int not null,
