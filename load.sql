@@ -374,8 +374,7 @@ insert into Can_Reserve(EID, RTName) values
 (20, 'baller'), 
 (20, 'expo-center'), 
 (20, 'meeting-room'), 
-(20, 'donald'), 
-(20, 'baller');
+(20, 'donald');
 
 insert into Reserves_For_Event (CID, RNumber, EID) values
 (18, 9, 4),
