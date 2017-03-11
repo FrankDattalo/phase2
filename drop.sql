@@ -24,3 +24,4 @@ drop table Room_Type;
 drop table Supply;
 drop table Worker;
 drop table Vehicle;
+drop table Supplier;

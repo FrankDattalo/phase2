@@ -152,6 +152,15 @@ price int not null,
 primary key (itemName)
 );
 
+create table Supplier (
+sid int not null,
+name varchar(15) not null,
+description text not null,
+address varchar(50) not null,
+phoneNo varchar(15) not null,
+primary key (sid)
+);
+
 create table Food (
 itemName varchar(15) not null, 
 description text not null, 
@@ -611,19 +620,78 @@ insert into Can_Reserve(EID, RTName) values
 
 -- TODO: Reserves
 
--- TODO: Supplier
+insert into Supplier (sid, name, description, address, phoneNo) values
+(1, 'Tord Motors', 'They sell cars. Sometimes they work.', '1 Tord Motors Lane', '1-531-578-4802'),
+(2, 'Foyota Lexits', 'They sell cars that are cheaper, but less cool.', '9 Horey Sheet St', '1-631-256-1101'),
+(3, 'Wolkswagen', 'Oh Yah, Good Vehicles', '1 Wolks Wagen', '1-000-000-0000'),
+(4, 'Maples', 'Kind of like staples, but only in Canada', '1 Maple Street', '3-210-123-3456'),
+(5, 'Worst Buy', 'How is this place still in business?', '3 Dont Buy From Here Lane', '1-678-456-2345'),
+(6, 'Krogert', 'Why does EVERYONE call it Krogerts? THERES NO S AT THE END!', '1 Seriously Though Blvd', '1-567-231-1234'),
+(7, 'MallMart', 'You can meet the best people here.', '1 Malton St', '1-673-221-4684');
 
--- TODO: Supply
+insert into Supply (itemName, description, price) values 
+('rain-drops', 'get', 10),
+('drop-tops', 'back to', 20),
+('pots-pans', 'the tri-state', 25),
+('things-n-stuff', 'If you want to run a hotel will youll need these things.', 45);
 
--- TODO: Food
+insert into Food (itemName, description, perishDate, price) values
+('oranges', 'for your immune system!', '3/21/2088', 3000),
+('bananas', 'to get some K', '1/23/4567', 10),
+('hamburgers', 'but they have cheese', '12/31/2099', 30),
+('pasta', 'mmmmmmmmmmmmmm, thats a spicy meatball', '6/30/1900', 50);
 
--- TODO: Vehicle
+insert into Vehicle (licensePlateNo, manufacturer, model, color, type, price) values
+('G7C0ZBA', 'Foyota Lexits', 'Crayolla', 'blue', 'sedan', 30000),
+('1HTYZBQ', 'Tord', 'Focus ST', 'yellow', 'hatchback', 25000),
+('GJ6030S', 'Wolkswagen USA', 'porsche cayman', 'black', 'superfast', 50000);
 
--- TODO: Purchases Supply
+insert into Purchases_Supply (invoice, quantity, purchaseDate, fulfillmentDate, BID, SID, Item) values
+(3, 3, '3/21/2015', '4/22/2015', 1, 4, 'things-n-stuff'),
+(4, 4, '3/22/2015', '4/22/2015', 2, 5, 'things-n-stuff'),
+(5, 5, '3/23/2015', '4/22/2015', 3, 4, 'things-n-stuff'),
+(6, 6, '3/24/2015', '4/22/2015', 4, 5, 'things-n-stuff'),
+(7, 7, '3/25/2015', '4/22/2015', 5, 4, 'things-n-stuff'),
+(8, 8, '3/26/2015', '4/22/2015', 2, 5, 'things-n-stuff'),
+(9, 1, '3/27/2015', '4/22/2015', 3, 4, 'things-n-stuff'),
+(10, 2, '3/28/2015', '4/22/2015', 4, 5, 'pots-pans'),
+(11, 7, '3/29/2015', '4/22/2015', 5, 4, 'things-n-stuff'),
+(12, 8, '4/20/2015', '4/22/2015', 1, 5, 'things-n-stuff'),
+(13, 9, '4/21/2015', '4/22/2015', 2, 4, 'things-n-stuff'),
+(14, 11, '4/22/2015', '4/22/2015', 3, 5, 'things-n-stuff'),
+(15, 23, '2/1/2015', '4/22/2015', 4, 4, 'pots-pans'),
+(16, 4, '3/1/2015', '4/22/2015', 5, 5, 'things-n-stuff'),
+(17, 2, '3/21/2015', '4/22/2015', 1, 4, 'pots-pans'),
+(18, 8, '3/21/2015', '4/22/2015', 2, 5, 'pots-pans'),
+(19, 3, '3/21/2015', '4/22/2015', 3, 4, 'pots-pans'),
+(20, 2, '3/21/2015', '4/22/2015', 4, 5, 'rain-drops'),
+(21, 1, '3/21/2015', '4/22/2015', 5, 4, 'drop-tops');
 
--- TODO: Purchases Food
+insert into Purchases_Food (invoice, quantity, purchaseDate, fulfillmentDate, BID, SID, Item) values
+(144, 3, '3/21/2015', '4/22/2015', 1, 6, 'oranges'),
+(145, 4, '3/21/2015', '4/22/2015', 2, 6, 'oranges'),
+(146, 5, '3/21/2015', '4/22/2015', 3, 7, 'oranges'),
+(147, 6, '3/21/2015', '4/22/2015', 4, 6, 'oranges'),
+(148, 7, '3/21/2015', '4/22/2015', 5, 7, 'oranges'),
+(149, 8, '3/21/2015', '4/22/2015', 2, 6, 'bananas'),
+(150, 1, '3/21/2015', '4/22/2015', 3, 6, 'bananas'),
+(151, 2, '3/21/2015', '4/22/2015', 4, 7, 'bananas'),
+(152, 7, '3/21/2015', '4/22/2015', 5, 7, 'bananas'),
+(153, 8, '3/21/2015', '4/22/2015', 1, 7, 'hamburgers'),
+(154, 9, '3/21/2015', '4/22/2015', 2, 7, 'hamburgers'),
+(156, 11, '3/21/2015', '4/22/2015', 3, 6, 'hamburgers'),
+(167, 23, '3/21/2015', '4/22/2015', 4, 6, 'hamburgers'),
+(192, 4, '3/21/2015', '4/22/2015', 5, 6, 'hamburgers'),
+(193, 2, '3/21/2015', '4/22/2015', 1, 7, 'pasta'),
+(194, 8, '3/21/2015', '4/22/2015', 2, 6, 'pasta'),
+(195, 3, '3/21/2015', '4/22/2015', 3, 7, 'pasta'),
+(196, 2, '3/21/2015', '4/22/2015', 4, 7, 'pasta'),
+(197, 1, '3/21/2015', '4/22/2015', 5, 6, 'pasta');
 
--- TODO: Purchases Vehicle
+insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate, BID, SID, PlateNo) values 
+(200, 1, '6/28/2015', '7/21/2016', 1, 1, 'G7C0ZBA'),
+(201, 1, '5/2/2015', '3/1/2017', 2, 2, '1HTYZBQ'),
+(202, 1, '2/3/2007', '9/9/2011', 3, 3, 'GJ6030S');
 
 -- Step 3. Update Tables to Add Constraints
 
