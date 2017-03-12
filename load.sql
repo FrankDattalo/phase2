@@ -286,8 +286,6 @@ insert into Facility (facilityId, description, type, openTime, closeTime, BID) v
 (34, 'Breakfast diner.', 'Restaurant', '08:00:00', '12:00:00', 2), 
 (35, '21 and over bar.', 'Restaurant', '16:00:00', '02:00:00', 4);
 
--- TODO fix these nulls for the occupied or reserved rooms & point them to customers & update customer's branches to be the branches from this table, 
---      also make sure not to break attends relation, the event EID needs to occur at the branch the customer is associated with. maybe we fix this?
 insert into Room (roomNo, status, cost, maxOccupancy, BID, RTName, CID, startTime, endTime) values 
 (9, 'reserved-by-customer', 724, 7, 4, 'expo-center', 18, '05/01/2016', '05/12/2017'), 
 (17, 'open', 105, 6, 2, 'performance-hall', null, null, null), 
@@ -325,10 +323,10 @@ insert into Customer (customerId, fName, mInit, lName, cardNo, dateOfBirth, BID)
 (2, 'Nissim', 'F', 'Hull', 44077, '04/08/1991', '1'), 
 (3, 'Joan', 'U', 'Sellers', 12701, '03/30/1914', '6'), 
 (4, 'Penelope', 'N', 'Lee', 90367, '11/23/1965', '3'), 
-(5, 'Sean', 'T', 'Sampson', 42453, '06/29/1884', '4'), -- dont touch
+(5, 'Sean', 'T', 'Sampson', 42453, '06/29/1884', '4'),
 (6, 'Justina', 'R', 'Guerra', 42340, '07/06/1934', '7'), 
 (9, 'Olivia', 'B', 'Alston', 80889, '06/12/1886', '5'), 
-(18, 'Raja', 'S', 'Baker', 20902, '12/01/2006', '7');  -- dont touch
+(18, 'Raja', 'S', 'Baker', 20902, '12/01/2006', '7');
 
 insert into Bill (billNo, billingDate, description, cost, CID) values
 (1, '3/25/2005', 'drinks', 40, 1),
@@ -461,6 +459,3 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 -- Step 3. Update Tables to Add Constraints
 
 -- Step 4. Add Triggers To Tables
-
-
--- Potentially remove salary from Position table and keep it only on Worker.
