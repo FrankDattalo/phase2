@@ -459,3 +459,5 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 -- Step 3. Update Tables to Add Constraints
 
 -- Step 4. Add Triggers To Tables
+-- Trigger 1: if event is created and has over 1000 people, give $100 discount
+-- Trigger 2: if room is reserved for a week or more, discount $50
