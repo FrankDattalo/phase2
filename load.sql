@@ -520,7 +520,7 @@ GO
 -- Trigger 1: if a worker gets a new position/promotion and they've been with the company for at least 10 years, give them a 4% salary increase
 
 CREATE TRIGGER workerSalaryInc ON [dbo].[Worker]
-INSTEAD OF UPDATE
+AFTER UPDATE
 AS
 	declare @appointed date, @workerSSN int, @start date
 
@@ -542,10 +542,10 @@ AS
 
 GO
 
--- Trigger 2: if room is reserved for a week or more, give customer 20% off
+-- Trigger 2: if room is reserved for a week or more, give customer $100 off
 
 CREATE TRIGGER roomDiscount ON [dbo].[Room]
-INSTEAD OF UPDATE
+AFTER UPDATE
 AS
 	declare @rmCost int, @billCost int, @rmStartTime date, @rmEndTime date, @custId int, @rmStatus varchar(20);
 
@@ -558,15 +558,9 @@ AS
 
 	IF UPDATE(CID)
 	BEGIN
-		--update Room
-		--set startTime = @rmStartTime, endTime = @rmEndTime, CID = @custId, status = @rmStatus
-		--where CID = @custId
-
 		IF (@rmCost IS NOT NULL) AND (DATEDIFF(DAY, @rmStartTime, @rmEndTime) >= 7)
 		BEGIN
-			PRINT '@rmCost before: ' + CAST(@rmCost AS VARCHAR)
 			SET @billCost = @rmCost - 100
-			PRINT '@billCost after: ' + CAST(@billCost AS VARCHAR)
 
 			update Bill
 			set cost = cost + @billCost
