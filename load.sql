@@ -457,7 +457,63 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 (202, 1, '2/3/2007', '9/9/2011', 3, 3, 'GJ6030S');
 
 -- Step 3. Update Tables to Add Constraints
-
+GO
 -- Step 4. Add Triggers To Tables
--- Trigger 1: if event is created and has over 1000 people, give $100 discount
--- Trigger 2: if room is reserved for a week or more, discount $50
+-- Trigger 1: if a worker gets a new position/promotion and they've been with the company for at least 10 years, give them a 4% salary increase
+
+CREATE TRIGGER workerSalaryInc ON [dbo].[Worker]
+INSTEAD OF UPDATE
+AS
+	declare @appointed date, @workerSSN int, @start date
+
+	SELECT @appointed = INSERTED.appointedOn,
+	       @workerSSN = INSERTED.ssn,
+		   @start = INSERTED.startDate
+	FROM inserted
+
+	IF UPDATE(appointedOn)
+	BEGIN
+
+		IF (DATEDIFF(DAY, @start, @appointed) >= 3650)
+		BEGIN
+			update Worker
+			set salary = salary * 1.04
+			where ssn = @workerSSN
+		END
+	END
+
+GO
+
+-- Trigger 2: if room is reserved for a week or more, give customer 20% off
+
+CREATE TRIGGER roomDiscount ON [dbo].[Room]
+INSTEAD OF UPDATE
+AS
+	declare @rmCost int, @billCost int, @rmStartTime date, @rmEndTime date, @custId int, @rmStatus varchar(20);
+
+	SELECT @rmCost = INSERTED.cost,
+		   @rmStartTime = INSERTED.startTime,
+		   @rmEndTime = INSERTED.endTime,
+		   @custId = INSERTED.CID,
+		   @rmStatus = INSERTED.status
+	FROM inserted
+
+	IF UPDATE(CID)
+	BEGIN
+		--update Room
+		--set startTime = @rmStartTime, endTime = @rmEndTime, CID = @custId, status = @rmStatus
+		--where CID = @custId
+
+		IF (@rmCost IS NOT NULL) AND (DATEDIFF(DAY, @rmStartTime, @rmEndTime) >= 7)
+		BEGIN
+			PRINT '@rmCost before: ' + CAST(@rmCost AS VARCHAR)
+			SET @billCost = @rmCost - 100
+			PRINT '@billCost after: ' + CAST(@billCost AS VARCHAR)
+
+			update Bill
+			set cost = cost + @billCost
+			where CID = @custId
+		END
+	END
+
+GO
