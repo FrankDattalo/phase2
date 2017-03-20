@@ -1,4 +1,33 @@
 -- Step 1: Remove Constraints
+alter table Branch drop constraint Rname_key;
+alter table Region drop constraint COfficeID_key;
+alter table Facility drop constraint BID_key;
+alter table Room drop constraint BID_key;
+alter table Room drop constraint RTName_key;
+alter table Room drop constraint CID_key;
+alter table Customer drop constraint BID_key;
+alter table Bill drop constraint CID_key;
+alter table Request drop constraint CID_key;
+alter table Attends drop constraint CID_key;
+alter table Attends drop constraint EID_key;
+alter table Event drop constraint BID_key;
+alter table Can_Reserve drop constraint EID_key;
+alter table Can_Reserve drop constraint RTName_key;
+alter table Reserves_For_Event drop constraint CID_key;
+alter table Reserves_For_Event drop constraint RNumber_key;
+alter table Reserves_For_Event drop constraint EID_key;
+alter table Reserves drop constraint BID_key;
+alter table Reserves drop constraint RNumber_key;
+alter table Reserves drop constraint EID_key;
+alter table Purchases_Supply drop constraint BID_key;
+alter table Purchases_Supply drop constraint SID_key;
+alter table Purchases_Supply drop constraint Item_key;
+alter table Purchases_Food drop constraint BID_key;
+alter table Purchases_Food drop constraint SID_key;
+alter table Purchases_Food drop constraint Item_key;
+alter table Purchases_Vehicle drop constraint BID_key;
+alter table Purchases_Vehicle drop constraint SID_key;
+alter table Purchases_Vehicle drop constraint PlateNo_key;
 
 -- Step 2: Drop Tables
 
