@@ -65,8 +65,7 @@ cost int not null,
 maxOccupancy int not null, 
 BID int not null, 
 RTName varchar(30) not null, 
-CID int, 
--- RNumber int not null, -- TODO: Dont know what this is?
+CID int,
 startTime date, 
 endTime date, 
 primary key (roomNo, BID)
@@ -111,7 +110,7 @@ primary key (requestId, CID)
 create table Attends (
 CID int not null, 
 EID int not null, 
-primary key (CID, EID)
+primary key clustered(CID, EID)
 );
 
 create table Event (
@@ -128,21 +127,21 @@ primary key (eventId)
 create table Can_Reserve (
 EID int not null, 
 RTName varchar(30) not null, 
-primary key(EID, RTname)
+primary key clustered(EID, RTname)
 );
 
 create table Reserves_For_Event (
 CID int not null, 
 RNumber int not null, 
 EID int not null, 
-primary key(CID, RNumber, EID)
+primary key clustered(CID, RNumber, EID)
 );
 
 create table Reserves (
 BID int not null, 
 RNumber int not null, 
 EID int not null, 
-primary key(BID, RNumber, EID)
+primary key clustered(BID, RNumber, EID)
 );
 
 create table Supply (
@@ -153,12 +152,12 @@ primary key (itemName)
 );
 
 create table Supplier (
-sid int not null,
+supplierId int not null,
 name varchar(15) not null,
 description text not null,
 address varchar(50) not null,
 phoneNo varchar(15) not null,
-primary key (sid)
+primary key (supplierId)
 );
 
 create table Food (
@@ -383,7 +382,7 @@ insert into Reserves (BID, RNumber, EID) values
 (4, 15, 18),
 (10, 82, 20);
 
-insert into Supplier (sid, name, description, address, phoneNo) values
+insert into Supplier (supplierId, name, description, address, phoneNo) values
 (1, 'Tord Motors', 'They sell cars. Sometimes they work.', '1 Tord Motors Lane', '1-531-578-4802'),
 (2, 'Foyota Lexits', 'They sell cars that are cheaper, but less cool.', '9 Horey Sheet St', '1-631-256-1101'),
 (3, 'Wolkswagen', 'Oh Yah, Good Vehicles', '1 Wolks Wagen', '1-000-000-0000'),
@@ -457,6 +456,65 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 (202, 1, '2/3/2007', '9/9/2011', 3, 3, 'GJ6030S');
 
 -- Step 3. Update Tables to Add Constraints
+alter table Branch
+	add constraint Rname_key foreign key(Rname) references Region(name);
+alter table Region
+	add constraint COfficeID_key foreign key(COfficeID) references Corporate_Office(officeId);
+alter table Facility
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Room
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Room
+	add constraint RTName_key foreign key(RTName) references Room_Type(name);
+alter table Room
+	add constraint CID_key foreign key(CID) references Customer(customerId);
+alter table Customer
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Bill
+	add constraint CID_key foreign key(CID) references Customer(customerId);
+alter table Request
+	add constraint CID_key foreign key(CID) references Customer(customerId);
+alter table Attends
+	add constraint CID_key foreign key(CID) references Customer(customerId);
+alter table Attends
+	add constraint EID_key foreign key(EID) references Event(eventId);
+alter table Event
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Can_Reserve
+	add constraint EID_key foreign key(EID) references Event(eventId);
+alter table Can_Reserve
+	add constraint RTName_key foreign key(RTName) references Room_Type(name);
+alter table Reserves_For_Event
+	add constraint CID_key foreign key(CID) references Customer(customerId);
+alter table Reserves_For_Event
+	add constraint RNumber_key foreign key(RNumber) references Room(roomNo);
+alter table Reserves_For_Event
+	add constraint EID_key foreign key(EID) references Event(eventId);
+alter table Reserves
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Reserves
+	add constraint RNumber_key foreign key(RNumber) references Room(roomNo);
+alter table Reserves
+	add constraint EID_key foreign key(EID) references Event(eventId);
+alter table Purchases_Supply
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Purchases_Supply
+	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+alter table Purchases_Supply
+	add constraint Item_key foreign key(Item) references Supply(itemName);
+alter table Purchases_Food
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Purchases_Food
+	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+alter table Purchases_Food
+	add constraint Item_key foreign key(Item) references Food(itemName);
+alter table Purchases_Vehicle
+	add constraint BID_key foreign key(BID) references Branch(branchId);
+alter table Purchases_Vehicle
+	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+alter table Purchases_Vehicle
+	add constraint PlateNo_key foreign key(PlateNo) references Vehicle(licensePlateNo);
+
 GO
 -- Step 4. Add Triggers To Tables
 -- Trigger 1: if a worker gets a new position/promotion and they've been with the company for at least 10 years, give them a 4% salary increase
