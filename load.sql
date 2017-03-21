@@ -457,63 +457,63 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 
 -- Step 3. Update Tables to Add Constraints
 alter table Branch
-	add constraint Rname_key foreign key(Rname) references Region(name);
+	add constraint FK_Branch_Region foreign key(Rname) references Region(name);
 alter table Region
-	add constraint COfficeID_key foreign key(COfficeID) references Corporate_Office(officeId);
+	add constraint FK_Region_Corporate_Office foreign key(COfficeID) references Corporate_Office(officeId);
 alter table Facility
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Facility_Branch foreign key(BID) references Branch(branchId);
 alter table Room
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Room_Branch foreign key(BID) references Branch(branchId);
 alter table Room
-	add constraint RTName_key foreign key(RTName) references Room_Type(name);
+	add constraint FK_Room_Room_Type foreign key(RTName) references Room_Type(name);
 alter table Room
-	add constraint CID_key foreign key(CID) references Customer(customerId);
+	add constraint FK_Room_Customer foreign key(CID) references Customer(customerId);
 alter table Customer
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Customer_Branch foreign key(BID) references Branch(branchId);
 alter table Bill
-	add constraint CID_key foreign key(CID) references Customer(customerId);
+	add constraint FK_Bill_Customer foreign key(CID) references Customer(customerId);
 alter table Request
-	add constraint CID_key foreign key(CID) references Customer(customerId);
+	add constraint FK_Request_Customer foreign key(CID) references Customer(customerId);
 alter table Attends
-	add constraint CID_key foreign key(CID) references Customer(customerId);
+	add constraint FK_Attends_Customer foreign key(CID) references Customer(customerId);
 alter table Attends
-	add constraint EID_key foreign key(EID) references Event(eventId);
+	add constraint FK_Attends_Event foreign key(EID) references Event(eventId);
 alter table Event
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Event_Branch foreign key(BID) references Branch(branchId);
 alter table Can_Reserve
-	add constraint EID_key foreign key(EID) references Event(eventId);
+	add constraint FK_Can_Reserve_Event foreign key(EID) references Event(eventId);
 alter table Can_Reserve
-	add constraint RTName_key foreign key(RTName) references Room_Type(name);
+	add constraint FK_Can_Reserve_Room_Type foreign key(RTName) references Room_Type(name);
 alter table Reserves_For_Event
-	add constraint CID_key foreign key(CID) references Customer(customerId);
+	add constraint FK_Reserves_For_Event_Customer foreign key(CID) references Customer(customerId);
 alter table Reserves_For_Event
-	add constraint RNumber_key foreign key(RNumber) references Room(roomNo);
+	add constraint FK_Reserves_For_Event_Room foreign key(RNumber) references Room(roomNo);
 alter table Reserves_For_Event
-	add constraint EID_key foreign key(EID) references Event(eventId);
+	add constraint FK_Reserves_For_Event_Event foreign key(EID) references Event(eventId);
 alter table Reserves
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Reserves_Branch foreign key(BID) references Branch(branchId);
 alter table Reserves
-	add constraint RNumber_key foreign key(RNumber) references Room(roomNo);
+	add constraint FK_Reserves_Room foreign key(RNumber) references Room(roomNo);
 alter table Reserves
-	add constraint EID_key foreign key(EID) references Event(eventId);
+	add constraint FK_Reserves_Event foreign key(EID) references Event(eventId);
 alter table Purchases_Supply
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Purchases_Supply_Branch foreign key(BID) references Branch(branchId);
 alter table Purchases_Supply
-	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+	add constraint FK_Purchases_Supply_Supplier foreign key(SID) references Supplier(supplierId);
 alter table Purchases_Supply
-	add constraint Item_key foreign key(Item) references Supply(itemName);
+	add constraint FK_Purchases_Supply_Supply foreign key(Item) references Supply(itemName);
 alter table Purchases_Food
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Purchases_Food_Branch foreign key(BID) references Branch(branchId);
 alter table Purchases_Food
-	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+	add constraint FK_Purchases_Food_Supplier foreign key(SID) references Supplier(supplierId);
 alter table Purchases_Food
-	add constraint Item_key foreign key(Item) references Food(itemName);
+	add constraint FK_Purchases_Food_Food foreign key(Item) references Food(itemName);
 alter table Purchases_Vehicle
-	add constraint BID_key foreign key(BID) references Branch(branchId);
+	add constraint FK_Purchases_Vehicle_Branch foreign key(BID) references Branch(branchId);
 alter table Purchases_Vehicle
-	add constraint SID_key foreign key(SID) references Supplier(supplierId);
+	add constraint FK_Purchases_Vehicle_Supplier foreign key(SID) references Supplier(supplierId);
 alter table Purchases_Vehicle
-	add constraint PlateNo_key foreign key(PlateNo) references Vehicle(licensePlateNo);
+	add constraint FK_Purchases_Vehicle_Vehicle foreign key(PlateNo) references Vehicle(licensePlateNo);
 
 GO
 -- Step 4. Add Triggers To Tables
