@@ -454,7 +454,7 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 (201, 1, '5/2/2015', '3/1/2017', 2, 2, '1HTYZBQ'),
 (202, 1, '2/3/2007', '9/9/2011', 3, 3, 'GJ6030S');
 
--- Step 3. Update Tables to Add Constraints
+-- Step 3. Update Tables to Add Constraints and Indexes
 alter table Branch add constraint FK_Branch_Region foreign key(Rname) references Region(name);
 alter table Region add constraint FK_Region_Corporate_Office foreign key(COfficeID) references Corporate_Office(officeId);
 alter table Facility add constraint FK_Facility_Branch foreign key(BID) references Branch(branchId);
@@ -485,6 +485,30 @@ alter table Purchases_Food add constraint FK_Purchases_Food_Food foreign key(Ite
 alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Branch foreign key(BID) references Branch(branchId);
 alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Supplier foreign key(SID) references Supplier(supplierId);
 alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Vehicle foreign key(PlateNo) references Vehicle(licensePlateNo);
+
+CREATE INDEX idx_cname
+ON Customer (lName, fName)
+
+CREATE INDEX idx_wname
+ON Worker (lName, fName)
+
+CREATE INDEX idx_roomCost
+ON Room (cost)
+
+CREATE INDEX idx_requestPrice
+ON Request (price)
+
+CREATE INDEX idx_eventPrice
+ON Event (price)
+
+CREATE INDEX idx_supplyPrice
+ON Supply (price)
+
+CREATE INDEX idx_foodPrice
+ON Food (price)
+
+CREATE INDEX idx_vehicle
+ON Vehicle (price, model, manufacturer)
 
 GO
 -- Step 4. Add Triggers To Tables

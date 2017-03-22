@@ -30,7 +30,18 @@ alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Branch;
 alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Supplier;
 alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Vehicle;
 
--- Step 2: Drop Tables
+-- Step 2: Drop Indexes
+
+drop index Customer.idx_cname
+drop index Worker.idx_wname
+drop index Room.idx_roomCost
+drop index Request.idx_requestPrice
+drop index Event.idx_eventPrice
+drop index Supply.idx_supplyPrice
+drop index Food.idx_foodPrice
+drop index Vehicle.idx_vehicle
+
+-- Step 3: Drop Tables
 
 drop table Attends;
 drop table Bill;
