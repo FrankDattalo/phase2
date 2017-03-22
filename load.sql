@@ -1,5 +1,4 @@
 -- Step 1. Create Tables
-use hotel;
 create table Branch (
 branchId int not null, 
 phoneNo varchar(15) not null, 
