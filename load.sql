@@ -131,9 +131,10 @@ primary key clustered(EID, RTname)
 
 create table Reserves_For_Event (
 CID int not null, 
+BID int not null,
 RNumber int not null, 
 EID int not null, 
-primary key clustered(CID, RNumber, EID)
+primary key clustered(CID, BID, RNumber, EID)
 );
 
 create table Reserves (
@@ -206,7 +207,7 @@ purchaseDate date not null,
 fulfillmentDate date, 
 BID int not null, 
 SID int not null, 
-PlateNo varchar(15) not null, 
+PlateNo varchar(7) not null, 
 primary key (invoice, BID, SID, PlateNo)
 );
 
@@ -371,9 +372,9 @@ insert into Can_Reserve(EID, RTName) values
 (20, 'meeting-room'), 
 (20, 'donald');
 
-insert into Reserves_For_Event (CID, RNumber, EID) values
-(18, 9, 4),
-(5, 76, 19);
+insert into Reserves_For_Event (CID, BID, RNumber, EID) values
+(18, 4, 9, 4),
+(5, 9, 76, 19);
 
 insert into Reserves (BID, RNumber, EID) values
 (6, 49, 13),
@@ -482,16 +483,20 @@ alter table Can_Reserve
 	add constraint FK_Can_Reserve_Event foreign key(EID) references Event(eventId);
 alter table Can_Reserve
 	add constraint FK_Can_Reserve_Room_Type foreign key(RTName) references Room_Type(name);
+
 alter table Reserves_For_Event
 	add constraint FK_Reserves_For_Event_Customer foreign key(CID) references Customer(customerId);
 alter table Reserves_For_Event
-	add constraint FK_Reserves_For_Event_Room foreign key(RNumber) references Room(roomNo);
+	add constraint FK_Reserves_For_Event_Room foreign key(RNumber, BID) references Room(roomNo, BID);
 alter table Reserves_For_Event
 	add constraint FK_Reserves_For_Event_Event foreign key(EID) references Event(eventId);
+-- alter table Reserves_For_Event
+	-- add constraint FK_Reserves_For_Event_Branch foreign key (BID) references Branch(branchId);
+
 alter table Reserves
 	add constraint FK_Reserves_Branch foreign key(BID) references Branch(branchId);
 alter table Reserves
-	add constraint FK_Reserves_Room foreign key(RNumber) references Room(roomNo);
+	add constraint FK_Reserves_Room foreign key(RNumber, BID) references Room(roomNo, BID);
 alter table Reserves
 	add constraint FK_Reserves_Event foreign key(EID) references Event(eventId);
 alter table Purchases_Supply
