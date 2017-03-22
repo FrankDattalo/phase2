@@ -9,7 +9,7 @@ primary key (branchId)
 );
 
 create table Region (
-name varchar(15) not null, 
+name varchar(30) not null, 
 description text not null, 
 timeZone char(4) not null, 
 COfficeID int not null, 
