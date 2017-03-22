@@ -1,5 +1,5 @@
 -- Step 1. Create Tables
-
+use hotel;
 create table Branch (
 branchId int not null, 
 phoneNo varchar(15) not null, 
@@ -9,7 +9,7 @@ primary key (branchId)
 );
 
 create table Region (
-name varchar(15) not null, 
+name varchar(30) not null, 
 description text not null, 
 timeZone char(4) not null, 
 COfficeID int not null, 
@@ -65,10 +65,10 @@ cost int not null,
 maxOccupancy int not null, 
 BID int not null, 
 RTName varchar(30) not null, 
-CID int,
+CID int null,
 startTime date, 
 endTime date, 
-primary key (roomNo, BID)
+primary key clustered(roomNo, BID)
 );
 
 create table Room_Type (
@@ -80,7 +80,7 @@ primary key (name)
 create table Customer (
 customerId int not null, 
 fName varchar(15) not null, 
-mInit char(1) not null, 
+mInit char(1), 
 lName varchar(15) not null, 
 cardNo int not null, 
 dateOfBirth date not null, 
@@ -294,8 +294,7 @@ insert into Room (roomNo, status, cost, maxOccupancy, BID, RTName, CID, startTim
 (49, 'reserved-by-branch', 633, 5, 6, 'family', null, '01/08/2016', '04/05/2017'), 
 (68, 'open', 415, 9, 2, 'baller', null, null, null), 
 (42, 'occupied', 326, 11, 10, 'donald', 9, '1/1/1999', '12/1/2017'), 
-(76, 'reserved-by-customer', 742, 14, 9, 'baller', 5, '07/03/2016', '08/29/2017'), 
-(70, 'occupied', 931, 10, 7, 'baller', 7, '1/2/1999', '1/3/3999'), 
+(76, 'reserved-by-customer', 742, 14, 9, 'baller', 5, '07/03/2016', '08/29/2017'),
 (45, 'open', 433, 11, 5, 'baller', null, null, null), 
 (8, 'open', 783, 6, 5, 'baller', null, null, null), 
 (58, 'open', 623, 3, 5, 'cost-saver', null, null, null), 
@@ -318,14 +317,14 @@ insert into Room_Type (name, description) values
 ('expo-center', 'where we lift weights');
 
 insert into Customer (customerId, fName, mInit, lName, cardNo, dateOfBirth, BID) values
-(1, 'Yolanda', 'M', 'Ross', 72139, '04/28/1927', '6'), 
-(2, 'Nissim', 'F', 'Hull', 44077, '04/08/1991', '1'), 
-(3, 'Joan', 'U', 'Sellers', 12701, '03/30/1914', '6'), 
-(4, 'Penelope', 'N', 'Lee', 90367, '11/23/1965', '3'), 
-(5, 'Sean', 'T', 'Sampson', 42453, '06/29/1884', '4'),
-(6, 'Justina', 'R', 'Guerra', 42340, '07/06/1934', '7'), 
-(9, 'Olivia', 'B', 'Alston', 80889, '06/12/1886', '5'), 
-(18, 'Raja', 'S', 'Baker', 20902, '12/01/2006', '7');
+(1, 'Yolanda', 'M', 'Ross', 72139, '04/28/1927', 6), 
+(2, 'Nissim', 'F', 'Hull', 44077, '04/08/1991', 1), 
+(3, 'Joan', 'U', 'Sellers', 12701, '03/30/1914', 6), 
+(4, 'Penelope', 'N', 'Lee', 90367, '11/23/1965', 3), 
+(5, 'Sean', 'T', 'Sampson', 42453, '06/29/1884', 4),
+(6, 'Justina', 'R', 'Guerra', 42340, '07/06/1934', 7), 
+(9, 'Olivia', 'B', 'Alston', 80889, '06/12/1886', 5), 
+(18, 'Raja', 'S', 'Baker', 20902, '12/01/2006', 7);
 
 insert into Bill (billNo, billingDate, description, cost, CID) values
 (1, '3/25/2005', 'drinks', 40, 1),
@@ -351,10 +350,10 @@ insert into Request (requestId, description, type, price, CID) values
 insert into Attends(CID, EID) values
 (18, 4), 
 (5, 19), 
-(67, 20), 
-(98, 19), 
-(69, 13), 
-(67, 15);
+(4, 20), 
+(3, 19), 
+(6, 13), 
+(9, 18);
 
 insert into Event(eventId, name, price, startDate, endDate, BID) values
 (4, 'Business Extravaganza!', '50', '05/01/2016', '05/12/2017', '7'), 
