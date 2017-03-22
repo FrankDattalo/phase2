@@ -559,9 +559,9 @@ AS
 		   @rmStatus = INSERTED.status
 	FROM inserted
 
-	IF UPDATE(CID)
+	IF UPDATE(CID) AND (@custId IS NOT NULL)
 	BEGIN
-		IF (@rmCost IS NOT NULL) AND (DATEDIFF(DAY, @rmStartTime, @rmEndTime) >= 7)
+		IF (@rmStartTime IS NOT NULL AND @rmEndTime IS NOT NULL) AND (DATEDIFF(DAY, @rmStartTime, @rmEndTime) >= 7)
 		BEGIN
 			SET @billCost = @rmCost - 100
 
