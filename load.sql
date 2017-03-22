@@ -1,4 +1,6 @@
--- Step 1. Create Tables
+------------------------
+-- Step 1: Create Tables
+------------------------
 create table Branch (
 branchId int not null, 
 phoneNo varchar(15) not null, 
@@ -42,7 +44,6 @@ primary key (ssn)
 
 create table Position (
 title varchar(20) not null, 
--- salary int not null, -- TODO: maybe remove this? Since workers already have a salary
 description text not null, 
 primary key (title)
 );
@@ -58,7 +59,7 @@ primary key (facilityId, BID)
 );
 
 create table Room (
-roomNo int not null, -- TODO: roomNo is unique among branches, but not unique among all rooms (Branch 1 and 3 both have room 101)
+roomNo int not null, -- roomNo is unique among branches, but not unique among all rooms (Branch 1 and 3 both have room 101)
 status varchar(20) not null, 
 cost int not null, 
 maxOccupancy int not null, 
@@ -86,7 +87,6 @@ dateOfBirth date not null,
 BID int not null, 
 primary key (customerId)
 );
-
 
 create table Bill (
 billNo int not null, 
@@ -116,7 +116,6 @@ create table Event (
 eventId int not null, 
 name varchar(50) not null, 
 price int not null, 
--- noOfAttendees int not null, -- TODO: this can be removed as we can figure this out through the Attends relationship
 startDate date not null, 
 endDate date not null, 
 BID int not null, 
@@ -211,7 +210,9 @@ PlateNo varchar(7) not null,
 primary key (invoice, BID, SID, PlateNo)
 );
 
--- Step 2. insert values  into Tables
+------------------------------------
+-- Step 2: Insert values into Tables
+------------------------------------
 insert into Branch (branchId, phoneNo, address, RName) values 
 (1, '1-832-205-4909', '784-1888 Blandit Rd.', 'pacific'), 
 (2, '1-398-463-4079', 'P.O. Box 736, 6351 Accumsan Avenue', 'southeast'), 
@@ -454,7 +455,10 @@ insert into Purchases_Vehicle (invoice, quantity, purchaseDate, fulfillmentDate,
 (201, 1, '5/2/2015', '3/1/2017', 2, 2, '1HTYZBQ'),
 (202, 1, '2/3/2007', '9/9/2011', 3, 3, 'GJ6030S');
 
--- Step 3. Update Tables to Add Constraints and Indexes
+-------------------------------------------------------
+-- Step 3: Update Tables to Add Constraints and Indexes
+-------------------------------------------------------
+-- Constraints include foreign keys
 alter table Branch add constraint FK_Branch_Region foreign key(Rname) references Region(name);
 alter table Region add constraint FK_Region_Corporate_Office foreign key(COfficeID) references Corporate_Office(officeId);
 alter table Facility add constraint FK_Facility_Branch foreign key(BID) references Branch(branchId);
@@ -486,12 +490,18 @@ alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Branch foreign
 alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Supplier foreign key(SID) references Supplier(supplierId);
 alter table Purchases_Vehicle add constraint FK_Purchases_Vehicle_Vehicle foreign key(PlateNo) references Vehicle(licensePlateNo);
 
+-- INDEXES:
+-- The below indexes are helpful because they are typical values one might sort or search by
+-- when looking something up in a table.
+
+-- Allows customers and workers to easily be searched by name
 CREATE INDEX idx_cname
 ON Customer (lName, fName)
 
 CREATE INDEX idx_wname
 ON Worker (lName, fName)
 
+-- Rooms, requests, events, supplies, and food can easily be searched by how much they cost
 CREATE INDEX idx_roomCost
 ON Room (cost)
 
@@ -507,18 +517,35 @@ ON Supply (price)
 CREATE INDEX idx_foodPrice
 ON Food (price)
 
+-- Allows vehicles to be easily searched by price, model, and manufacturer
 CREATE INDEX idx_vehicle
 ON Vehicle (price, model, manufacturer)
 
 GO
--- Step 4. Add Triggers To Tables
--- Trigger 1: if a worker gets a new position/promotion and they've been with the company for at least 10 years, give them a 4% salary increase
+
+---------------------------------
+-- Step 4: Add Triggers To Tables
+---------------------------------
+
+-- Trigger 1: If a worker gets a new position/promotion and they've been with the company for at least 10 years, give them a 4% salary increase.
+
+-- HOW WE TESTED:
+-- We ran an update query (i.e. update Worker set appointedOn = '2022-10-18' where ssn = 183153645)
+-- and monitored the output to see if a worker's salary changed accordingly. We also checked to make
+-- sure the trigger didn't execute the IF block when something besides the appointedOn
+-- date was changed. Finally, we checked UPDATE queries when the difference between the startTime
+-- and endTime were less than 10 years, exactly 10 years, and greater than 10 years.
+-- All these tests worked successfully and updated the Worker table as intended.
+-- However, note that due to leap years, a worker could have a date difference of several days
+-- less than 10 years and still get the salary increase.
 
 CREATE TRIGGER workerSalaryInc ON [dbo].[Worker]
 AFTER UPDATE
 AS
+	-- set local vars
 	declare @appointed date, @workerSSN int, @start date
 
+	-- get values from updated table
 	SELECT @appointed = INSERTED.appointedOn,
 	       @workerSSN = INSERTED.ssn,
 		   @start = INSERTED.startDate
@@ -527,6 +554,7 @@ AS
 	IF UPDATE(appointedOn)
 	BEGIN
 
+		-- check if difference between start date and appointed/promotion date is greater than 10 years
 		IF (DATEDIFF(DAY, @start, @appointed) >= 3650)
 		BEGIN
 			update Worker
@@ -537,20 +565,31 @@ AS
 
 GO
 
--- Trigger 2: if room is reserved for a week or more, give customer $100 off
+-- Trigger 2: If a room is reserved for a week or more, give the customer $100 off the room price for their bill
+
+-- HOW WE TESTED:
+-- We ran an update query (i.e. update Room set CID = 2, startTime = '2016-06-01', endTime = '2016-06-09' where roomNo = 2)
+-- and monitored the output to see if a customer's bill changed accordingly when the discount was applied.
+-- We also checked to make sure the trigger didn't execute the IF block when CID was changed to NULL and when
+-- the CID was not updated. Similarly, we checked to make sure no discount was applied when the startTime and
+-- endTime's were changed to null. Finally, we checked UPDATE queries when the difference between the startTime
+-- and endTime were less than a week, exactly a week, and greater than a week. All these tests worked successfully
+-- and updated the Room table as intended.
 
 CREATE TRIGGER roomDiscount ON [dbo].[Room]
 AFTER UPDATE
 AS
-	declare @rmCost int, @billCost int, @rmStartTime date, @rmEndTime date, @custId int, @rmStatus varchar(20);
+	-- set local vars
+	declare @rmCost int, @billCost int, @rmStartTime date, @rmEndTime date, @custId int;
 
+	-- get values from updated table
 	SELECT @rmCost = INSERTED.cost,
 		   @rmStartTime = INSERTED.startTime,
 		   @rmEndTime = INSERTED.endTime,
-		   @custId = INSERTED.CID,
-		   @rmStatus = INSERTED.status
+		   @custId = INSERTED.CID
 	FROM inserted
 
+	-- check customer ID and start and end times. Update bill accordingly
 	IF UPDATE(CID) AND (@custId IS NOT NULL)
 	BEGIN
 		IF (@rmStartTime IS NOT NULL AND @rmEndTime IS NOT NULL) AND (DATEDIFF(DAY, @rmStartTime, @rmEndTime) >= 7)

@@ -1,4 +1,6 @@
--- Step 1: Remove Constraints
+-----------------------------------------
+-- Step 1: Remove Foreign Key Constraints
+-----------------------------------------
 alter table Branch drop constraint FK_Branch_Region;
 alter table Region drop constraint FK_Region_Corporate_Office;
 alter table Facility drop constraint FK_Facility_Branch;
@@ -30,8 +32,9 @@ alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Branch;
 alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Supplier;
 alter table Purchases_Vehicle drop constraint FK_Purchases_Vehicle_Vehicle;
 
+-----------------------
 -- Step 2: Drop Indexes
-
+-----------------------
 drop index Customer.idx_cname
 drop index Worker.idx_wname
 drop index Room.idx_roomCost
@@ -41,8 +44,9 @@ drop index Supply.idx_supplyPrice
 drop index Food.idx_foodPrice
 drop index Vehicle.idx_vehicle
 
+----------------------
 -- Step 3: Drop Tables
-
+----------------------
 drop table Attends;
 drop table Bill;
 drop table Branch;
