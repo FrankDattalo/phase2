@@ -16,6 +16,7 @@ alter table Can_Reserve drop constraint FK_Can_Reserve_Room_Type;
 alter table Reserves_For_Event drop constraint FK_Reserves_For_Event_Customer;
 alter table Reserves_For_Event drop constraint FK_Reserves_For_Event_Room;
 alter table Reserves_For_Event drop constraint FK_Reserves_For_Event_Event;
+alter table Reserves_For_Event drop constraint FK_Reserves_For_Event_Branch;
 alter table Reserves drop constraint FK_Reserves_Branch;
 alter table Reserves drop constraint FK_Reserves_Room;
 alter table Reserves drop constraint FK_Reserves_Event;
