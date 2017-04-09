@@ -23,11 +23,16 @@ inner join Event as e
 	on a.EID = e.eventId
 where e.name = 'Tech Expo';
 
--- Query 5: Retrieve the name and number of branch and amount and the total food cost for the past 1000 days
-select b.branchId, b.phoneNo, sum(f.invoice) as cost
-from Branch b
-inner join Purchases_Food f on f.BID = b.branchId
-where f.purchaseDate > dateAdd(day, -1000, getDate())
+-- Query 5: Retrieve the name and number of branch and total purchase cost for the past 1000 days
+select b.branchId, b.phoneNo, sum(invoice) as cost
+from (
+    select f.BID, f.purchaseDate, f.invoice from Purchases_Food as f
+    union all
+    select s.BID, s.purchaseDate, s.invoice from Purchases_Supply as s
+    union all
+    select v.BID, v.purchaseDate, v.invoice from Purchases_Vehicle as v
+) as p inner join Branch b on b.branchId = p.BID
+where p.purchaseDate > dateAdd(day, -1000, getDate())
 group by b.branchId, b.phoneNo;
 
 -- Query 6: Retrieve the ssn and name of workers managed by a specific corporate office
