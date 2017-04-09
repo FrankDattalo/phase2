@@ -2,7 +2,7 @@
 select c.customerId, c.fName, c.lName, c.BID
 from Customer c
 inner join Bill b on b.CID = c.customerId
-where b.billingDate > dateAdd(day, -1000, getdate());
+where b.billingDate > dateAdd(day, -1000, getDate());
 
 -- Query 2: Select names of customers who have both reserved a room for an event and for stay
 
