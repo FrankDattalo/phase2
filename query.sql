@@ -37,12 +37,17 @@ from (
 where p.purchaseDate > dateAdd(day, -1000, getDate())
 group by b.branchId, b.phoneNo;
 
--- Query 6: Retrieve the ssn and name of workers managed by a specific corporate office
-select w.ssn, w.fName, w.lName from Worker as w
-inner join Branch as b
-	on w.BID = b.branchId
-inner join Region as r
-	on b.RName = r.name
-inner join Corporate_Office as co
-	on r.COfficeID = co.officeId
-where co.officeId = 4;
+-- Query 6: Retrieve the branch ID's of branches that have room types of donald or baller
+select b.branchId from Branch as b
+inner join Room as r
+	on b.branchId = r.BID
+inner join Room_Type as rt
+	on r.RTName = rt.name
+where rt.name = 'donald'
+union
+select b.branchId from Branch as b
+inner join Room as r
+	on b.branchId = r.BID
+inner join Room_Type as rt
+	on r.RTName = rt.name
+where rt.name = 'baller';
