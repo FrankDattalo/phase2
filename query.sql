@@ -1,8 +1,10 @@
--- Query 1: Retrieve information of customers who have been billed in the last 1000 days
-select c.customerId, c.fName, c.lName, c.BID
-from Customer c
-inner join Bill b on b.CID = c.customerId
-where b.billingDate > dateAdd(day, -1000, getDate());
+-- Query 1: Retrieve the names of all people who attended events but did not reserve rooms
+select c.fName, c.lName from Customer c
+inner join Attends a on c.customerId = a.CID
+where not exists (
+    select 1 from Room r
+    where r.CID = c.customerId
+      and r.BID = c.BID);
 
 -- Query 2: Select names of customers who have both reserved a room for an event and for stay
 select fName, lName from Customer where customerId in (select CID from Room)
