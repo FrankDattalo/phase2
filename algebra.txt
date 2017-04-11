@@ -1,4 +1,4 @@
-USEFUL GREEK LETTERS DELETE THIS BEFORE SUBMISSION. 
+﻿USEFUL GREEK LETTERS DELETE THIS BEFORE SUBMISSION. 
 If you guys run into issues with these not displaying we should look probably just use words / ASCII symbol
 
 π   project
@@ -79,3 +79,15 @@ inner join Room as r
 inner join Room_Type as rt
 	on r.RTName = rt.name
 where rt.name = 'baller';
+
+BRANCH_ROOM_1      ← Branch    ⋈ (branchId = BID) Room;
+BRANCH_ROOM_TYPE_1 ← Room_Type ⋈ (RTName = name)    BRANCH_ROOM_1;
+SPECIFIC_EVENT_1   ← σ (name = 'donald') BRANCH_ROOM_TYPE_1;
+RESULT_1           ← π (branchId) SPECIFIC_EVENT_1;
+
+BRANCH_ROOM_2      ← Branch    ⋈ (branchId = BID) Room;
+BRANCH_ROOM_TYPE_2 ← Room_Type ⋈ (RTName = name)    BRANCH_ROOM_2;
+SPECIFIC_EVENT_2   ← σ (name = 'baller') BRANCH_ROOM_TYPE_2;
+RESULT_2           ← π (branchId) SPECIFIC_EVENT_2;
+
+FINAL_RESULT       ← RESULT_1 ∪ RESULT_2
