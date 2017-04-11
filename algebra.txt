@@ -65,6 +65,17 @@ from (
 where p.purchaseDate > dateAdd(day, -1000, getDate())
 group by b.branchId, b.phoneNo;
 
+FOOD             ← π (BID, purchaseDate, invoice) Purchases_Food;
+SUPPLY           ← π (BID, purchaseDate, invoice) Purchases_Supply;
+VEHICLE          ← π (BID, purchaseDate, invoice) Purchases_Vehicle;
+PURCHASES        ← FOOD ∪ SUPPLY ∪ VEHICLE;
+BRANCH_PURCHASES ← Branch ⋈ (branchId = BID) PURCHASES;
+
+PAST_1000        ← σ (purchaseDate > dateAdd(day, -1000, getDate())) BRANCH_PURCHASES;
+AGGREGATE        ← (branchId, phoneNo) Ƒ (sum invoice) PAST_1000;
+TO_RENAME        ← π (branchId, phoneNo, sum_invoice) AGGREGATE;
+RESULT           ← ρ (branchId, phoneNo, sum) TO_RENAME;
+
 -- Query 6: Retrieve the branch ID's of branches that have room types of donald or baller
 select b.branchId from Branch as b
 inner join Room as r
@@ -81,12 +92,12 @@ inner join Room_Type as rt
 where rt.name = 'baller';
 
 BRANCH_ROOM_1      ← Branch    ⋈ (branchId = BID) Room;
-BRANCH_ROOM_TYPE_1 ← Room_Type ⋈ (RTName = name)    BRANCH_ROOM_1;
+BRANCH_ROOM_TYPE_1 ← Room_Type ⋈ (RTName = name)  BRANCH_ROOM_1;
 SPECIFIC_EVENT_1   ← σ (name = 'donald') BRANCH_ROOM_TYPE_1;
 RESULT_1           ← π (branchId) SPECIFIC_EVENT_1;
 
 BRANCH_ROOM_2      ← Branch    ⋈ (branchId = BID) Room;
-BRANCH_ROOM_TYPE_2 ← Room_Type ⋈ (RTName = name)    BRANCH_ROOM_2;
+BRANCH_ROOM_TYPE_2 ← Room_Type ⋈ (RTName = name)  BRANCH_ROOM_2;
 SPECIFIC_EVENT_2   ← σ (name = 'baller') BRANCH_ROOM_TYPE_2;
 RESULT_2           ← π (branchId) SPECIFIC_EVENT_2;
 
