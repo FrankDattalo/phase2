@@ -1,4 +1,6 @@
-TODO: USEFUL GREEK LETTERS DELETE THIS BEFORE SUBMISSION
+USEFUL GREEK LETTERS DELETE THIS BEFORE SUBMISSION. 
+If you guys run into issues with these not displaying we should look probably just use words / ASCII symbol
+
 π   project
 ρ   rename
 σ   select
@@ -8,6 +10,8 @@ TODO: USEFUL GREEK LETTERS DELETE THIS BEFORE SUBMISSION
 ⨯   cartesian product
 -   difference
 *   natural join
+Ƒ   aggregate function
+←   assignment
 
 other characters can be found at 
 http://www.fileformat.info/info/unicode/char/search.htm
@@ -31,7 +35,10 @@ from Customer c
 inner join Branch b on b.branchId = c.BID
 group by b.branchId, b.address, b.phoneNo;
 
-
+BRANCH_CUSTOMER ← Branch ⋈ (branchId = BID) Customer;
+AGGREGATE       ← (branchId, address, phoneNo) Ƒ (count customerId) BRANCH_CUSTOMER;
+TO_RENAME       ← π (branchId, phoneNo, address, count_customerId) AGGREGATE;
+RESULT          ← ρ (branchId, phoneNo, address, count) TO_RENAME;
 
 -- Query 4: Names of customers who have attended a specific event
 select c.fName, c.lName from Customer as c
@@ -40,6 +47,11 @@ inner join Attends as a
 inner join Event as e
 	on a.EID = e.eventId
 where e.name = 'Tech Expo';
+
+CUSTOMER_ATTENDS        ← Customer ⋈ (customerId = CID) Attends;
+CUSTOMER_ATTENDS_EVENT  ← Event    ⋈ (eventId = EID)    CUSTOMER_ATTENDS;
+SPECIFIC_EVENT          ← σ (name = 'Tech Expo') CUSTOMER_ATTENDS_EVENT;
+RESULT                  ← π (fName, lName) SPECIFIC_EVENT;
 
 -- Query 5: Retrieve the name and number of branch and total purchase cost for the past 1000 days
 select b.branchId, b.phoneNo, sum(invoice) as cost
