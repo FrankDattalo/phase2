@@ -16,7 +16,7 @@ If you guys run into issues with these not displaying we should look probably ju
 other characters can be found at 
 http://www.fileformat.info/info/unicode/char/search.htm
 
--- Query 1: Retrieve the names of all people who attended events but did not reserve rooms
+-- Query 1: Retrieve the names of all people who attended events at a branch but did not reserve rooms at that branch
 select c.fName, c.lName from Customer c
 inner join Attends a on c.customerId = a.CID
 where not exists (
@@ -24,10 +24,19 @@ where not exists (
     where r.CID = c.customerId
       and r.BID = c.BID);
 
+ATTENDED_EVENTS ← Customer ⋈ (customerId = CID) Attends;
+RESERVED_ROOMS  ← Customer ⋈ (customerId = CID, BID = BID) Room;
+DIFFERENCE      ← ATTENDED_EVENTS - RESERVED_ROOMS;
+RESULT          ← π (fName, lName) DIFFERENCE;
+
 -- Query 2: Select names of customers who have both reserved a room for an event and for stay
 select fName, lName from Customer where customerId in (select CID from Room)
 intersect
 select fName, lName from Customer where customerId in (select CID from Reserves_For_Event);
+
+CUSTOMER_ROOM  ← Customer ⋈ (customerId = CID) Room;
+CUSTOMER_EVENT ← Customer ⋈ (customerId = CID) Reserves_For_Event;
+RESULT         ← π (fName, lName) CUSTOMER_ROOM ∩ CUSTOMER_EVENT
 
 -- Query 3: Select number, id, and address of branch and amount of people currently staying at that branch
 select b.branchId, b.phoneNo, b.address, count(c.customerId) as count
