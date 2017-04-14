@@ -57,6 +57,10 @@ function send500(request, response, message) {
 }
 
 function handleStatic(endpoint, request, response) {
+    if(!endpoint.fileLocation) {
+        endpoint.fileLocation = '.' + endpoint.url;
+    }
+
     console.log(`Responding with static content at endpoint: ${endpoint.url} from file ${endpoint.fileLocation}`);
     fs.readFile(endpoint.fileLocation, 'utf8', function(error, data) {
         if(error) {

@@ -6,11 +6,17 @@
     <body>
         <center>
             <pre>
-                <h2>Hotel</h2>
+                <h2><a href="/">Home</a> - Query 1</h2>
                 <table cellpadding="15" border="1">
-                    <th>Query #</th><th>View Query</th><th>Run Query</th>
                     <tr>
-                        <td>Query 1</td><td><a href="/query1.view">View</a></td><td><a href="/query1.exec">Run</a></td>
+                        <td>
+select c.fName, c.lName from Customer c
+inner join Attends a on c.customerId = a.CID
+where not exists (
+    select 1 from Room r
+    where r.CID = c.customerId
+    and r.BID = c.BID);
+                        </td>
                     </tr>
                 </table>
             </pre>

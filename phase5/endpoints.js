@@ -23,7 +23,12 @@ const endpoints = [
        fileLocation: './index.html'
    },
    {
-    url: '/query1',
+       url: '/query1.view',
+       static: true,
+       fileLocation: './query1.html'
+   },
+   {
+    url: '/query1.exec',
     handler: function(request, response) {
         execQuery(`
             select c.fName, c.lName from Customer c
