@@ -98,19 +98,16 @@ function handleRequest(endpoints, request, response) {
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Content-Type', 'text/html');
 
-    for(const endpoint of endpoints) {
-        if(endpoint.url === request.url) {
-            if(endpoint.static) {
-                handleStatic(endpoint, request, response);
-            } else {
-                handleDynamic(endpoint, request, response);
-            }
-            
-            return;
-        }
+    const endpoint = endpoints.filter(ep => ep.url === request.url)[0];
+
+    if(!endpoint) {
+        send404(request, response);
+        return;
     }
 
-    send404(request, response);
+    const handler = endpoint.static ? handleStatic : handleDynamic;
+
+    handler(endpoint, request, response);
 }
 
 function run(config, endpoints) {
@@ -124,15 +121,12 @@ function run(config, endpoints) {
 
         http.createServer(function(request, response) {
             handleRequest(endpoints, request, response);
+            
         }).listen(config.server.port, config.server.hostname, function() {
 
             console.log(`Server started at: http://${config.server.hostname}:${config.server.port}`);
             console.log('Registered endpoints: [');
-
-            for(const endpoint of endpoints) {
-                console.log(`-> ${endpoint.url}`);
-            }
-
+            endpoints.forEach(endpoint => console.log(`-> ${endpoint.url}`));
             console.log(']');
         });
     });
