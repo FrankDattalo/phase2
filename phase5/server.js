@@ -78,9 +78,10 @@ function handleDynamic(endpoint, request, response) {
 
                 begin(response, endpoint.columnNames, queryString, endpoint.url);
 
-                const mapper = endpoint.mapper ? endpoint.mapper : (i) => i;
+                queryData.recordset.map(dataElement => 
+                    endpoint.columns.map(name => dataElement[name])
+                ).forEach(dataElement => row(response, dataElement));
 
-                queryData.recordset.map(mapper).forEach(dataElement => row(response, dataElement));
                 end(response);
             });
         });
