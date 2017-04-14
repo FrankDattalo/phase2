@@ -2,42 +2,36 @@ const http  = require('http');
 const fs    = require('fs');
 const sql   = require('mssql');
 
+function mapArray(array, aroundElement) {
+    return array.map((item) => `<${aroundElement}>${item}</${aroundElement}>`).reduce((total, item) => total + item, '');
+}
 
-function begin(response, tableHeadersArray) {
-    const headers = tableHeadersArray.map(item => `<th>${item}</th>`).reduce((total, item) => total + item, '');
+function begin(response, tableHeadersArray, query, url) {
+    const headers = tableHeadersArray ? mapArray(tableHeadersArray, 'th'): '';
 
     response.totalResponse = 
-    `<!DOCTYPE html>
-        <html>
-            <head>
-                <title>Phase 5</title>
-            </head>
-            <body>
-                <center>
-                    <pre>
-                        <h2><a href="/">Home</a></h2>
-                        <table border="1" cellpadding="15">
-                            ${headers}`;
+    `<!DOCTYPE html><html><head><title>Phase 5 - ${url}</title></head><body><center>
+        <pre>
+            <h2><a href="/">Home</a> - ${url}</h2>
+            <table border="1" cellpadding="15">
+                <tr><td>${query}</td></tr>
+            </table>
+            <table border="1" cellpadding="15">
+                ${headers}`;
 }
 
 function row(response, rowArray) {
-    const rowhtml = rowArray.map(item => `<td>${item}</td>`).reduce((total, item) => total + item, '');
-    response.totalResponse += 
-                            `<tr>${rowhtml}</tr>`;
+    const rowhtml = mapArray(rowArray, 'td');
+    response.totalResponse += `<tr>${rowhtml}</tr>`;
 }
 
 function end(response) {
-    response.totalResponse +=
-                        `</table>
-                    </pre>
-                </center>
-            </body>
-        </html>`;
+    response.totalResponse += `</table></pre></center></body></html>`;
     response.end(response.totalResponse);
 }
 
-function execQuery(query, callback) {
-   new sql.Request().query(query, callback);
+function query(queryToExec, callback) {
+   new sql.Request().query(queryToExec, callback);
 }
 
 function send404(request, response, message) {
@@ -75,7 +69,21 @@ function handleStatic(endpoint, request, response) {
 function handleDynamic(endpoint, request, response) {
     console.log(`Responding with dynamic content at endpoint: ${endpoint.url}`);
     try {
-        endpoint.handler(request, response);
+        fs.readFile(`.${endpoint.url}.sql`, 'utf8', function(fileError, queryString) {
+            query(queryString, function (queryError, queryData) {
+                if(queryError) {
+                    response.end(queryError);
+                    return;
+                }
+
+                begin(response, endpoint.columnNames, queryString, endpoint.url);
+
+                const mapper = endpoint.mapper ? endpoint.mapper : (i) => i;
+
+                queryData.recordset.map(mapper).forEach(dataElement => row(response, dataElement));
+                end(response);
+            });
+        });
     } catch (e) {
         console.log(e);
         send500(request, response, `handle dynamic failed for ${request.url}`);
@@ -83,7 +91,7 @@ function handleDynamic(endpoint, request, response) {
 }
 
 function handleRequest(endpoints, request, response) {
-     console.log(`Request recieved: ${request.url}`);
+    console.log(`Request recieved: ${request.url}`);
 
     response.statusCode = 200;
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -105,8 +113,6 @@ function handleRequest(endpoints, request, response) {
 }
 
 function run(config, endpoints) {
-    
-
     console.log(`Attempting to connect to database with configuration: ${JSON.stringify(config.sql)}`);
 
     sql.connect(config.sql, function(error) {
@@ -118,14 +124,17 @@ function run(config, endpoints) {
         http.createServer(function(request, response) {
             handleRequest(endpoints, request, response);
         }).listen(config.server.port, config.server.hostname, function() {
+
             console.log(`Server started at: http://${config.server.hostname}:${config.server.port}`);
             console.log('Registered endpoints: [');
+
             for(const endpoint of endpoints) {
                 console.log(`-> ${endpoint.url}`);
             }
+
             console.log(']');
         });
     });
 }
 
-module.exports = { run, begin, row, end, execQuery };
+module.exports = { run };

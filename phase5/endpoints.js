@@ -1,12 +1,4 @@
-const { run, begin, row, end, execQuery }   = require('./server.js');
-
-function handleError(response, error, callback) {
-    if(error) {
-        response.end(error);
-    } else {
-        callback();
-    }
-}
+const { run }   = require('./server.js');
 
 const endpoints = [
    /*
@@ -14,35 +6,24 @@ const endpoints = [
        url: <url string>,
        static: <true or false>,
        fileLocation: <file location on disk if static is true>,
-       handler: function that takes request and response if static is false
+       columnNames: <array containing ordered column names of return query>
+       mapper: <function that takes one data element and returns an array of ordered columns>
    }
    */
    {
-       url: '/',
-       static: true,
-       fileLocation: './index.html'
+        url: '/',
+        static: true,
+        fileLocation: './index.html'
    },
    {
-       url: '/query1.view',
-       static: true,
-       fileLocation: './query1.html'
+        url: '/query1',
+        columnNames: ['First Name', 'Last Name'],
+        mapper: element => [element.fName, element.lName]
    },
    {
-    url: '/query1.exec',
-    handler: function(request, response) {
-        execQuery(`
-            select c.fName, c.lName from Customer c
-            inner join Attends a on c.customerId = a.CID
-            where not exists (
-                select 1 from Room r
-                where r.CID = c.customerId
-                and r.BID = c.BID);
-        `, (error, data) => handleError(response, error, () => {
-            begin(response, ['First Name', 'Last Name']);
-            data.recordset.forEach(element => row(response, [element.fName, element.lName]));
-            end(response);
-        }));
-    }
+        url: '/query2',
+        columnNames: ['First Name', 'Last Name'],
+        mapper: element => [element.fName, element.lName]
    }
 ];
 
