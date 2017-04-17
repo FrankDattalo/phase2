@@ -44,8 +44,8 @@ const config = {
         port: 80
     },
     sql: {
-        user: "admin",
-        password: "",
+        user: "sa",
+        password: "pw",
         server: "DESKTOP-LKS836Q\\SQLEXPRESS",
         database: "master"
     }
