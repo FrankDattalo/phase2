@@ -66,19 +66,6 @@ function handleStatic(endpoint, request, response) {
     });
 }
 
-function noResult(response, url, query) {
-    response.end(
-         `<!DOCTYPE html><html><head><title>Phase 5 - ${url}</title></head><body><center>
-            <pre>
-                <h2><a href="/">Home</a> - ${url}</h2>
-                <table border="1" cellpadding="15">
-                    <tr><td>${query}</td></tr>
-                </table>
-Done
-            </pre></center></body></html>`
-    );
-}
-
 function handleDynamic(endpoint, request, response) {
     console.log(`Responding with dynamic content at endpoint: ${endpoint.url}`);
     try {
