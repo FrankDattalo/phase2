@@ -29,12 +29,14 @@ function query(queryToExec, callback) {
 
 function send404(request, response, message) {
     response.statusCode = 404;
-    sendResponse('./error.html', response, message);
+    console.log(`Responding with 404: ${message}`);
+    sendResponse(response, './error.html', {message});
 }
 
 function send500(request, response, message) {
     response.statusCode = 500;
-    sendResponse('./error.html', response, message);
+    console.log(`Responding with 500: ${message}`);
+    sendResponse(response, './error.html', {message});
 }
 
 function handleStatic(endpoint, request, response) {
@@ -61,8 +63,9 @@ function handleDynamic(endpoint, request, response) {
                 response.end(`${fileError}`);
             }
 
-            console.log("Executing query: ")
+            console.log("Executing query: -------------------------------------------")
             console.log(queryString);
+            console.log('------------------------------------------------------------');
 
             query(queryString, function (queryError, queryData) {
                 if(queryError) {
@@ -75,25 +78,14 @@ function handleDynamic(endpoint, request, response) {
                         url: endpoint.url,
                         query: queryString
                     });
-                    return;
-                }
-
-                fs.readFile('./result.html', 'utf8', function(fileError, file) {
-                    if(fileError) {
-                        response.end(`${fileError}`);
-                    }
-
-                    const data = queryData.recordset.map(item => endpoint.columns.map(colName => item[colName]));
-
-                    const compiled = hb.compile(file);
-                    
-                    response.end(compiled({
+                } else {                   
+                    sendResponse(response, './result.html', {
                         headers: endpoint.columnNames,
                         query: queryString,
                         url: endpoint.url,
-                        rows: data
-                    }));
-                });
+                        rows: queryData.recordset.map(item => endpoint.columns.map(colName => item[colName]))
+                    });
+                }
             });
         });
     } catch (e) {
@@ -112,7 +104,7 @@ function handleRequest(endpoints, request, response) {
     const endpoint = endpoints.filter(ep => ep.url === request.url)[0];
 
     if(!endpoint) {
-        send404(request, response);
+        send404(request, response, `no mapping for ${request.url}`);
         return;
     }
 
@@ -138,9 +130,7 @@ function run(config, endpoints) {
         }).listen(config.server.port, config.server.hostname, function() {
 
             console.log(`Server started at: http://${config.server.hostname}:${config.server.port}`);
-            console.log('Registered endpoints: [');
-            endpoints.forEach(endpoint => console.log(`-> ${endpoint.url}`));
-            console.log(']');
+            console.log(`Registered endpoints: [${endpoints.map(i => ' ' + i.url)}]`);
         });
     });
 }
