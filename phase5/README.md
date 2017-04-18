@@ -1,5 +1,5 @@
 step 1: clone the repo <br/>
-step 2: cd into this phone <br/>
+step 2: cd into /phase5 <br/>
 step 3: install mssql & handlebars <br/>
 `$ npm install mssql` <br/>
 `$ npm install handlebars` <br/>
