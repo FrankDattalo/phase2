@@ -1,4 +1,4 @@
-step 1: clone the repo
+```step 1: clone the repo
 step 2: cd into this phone 
 step 3: install mssql & handlebars
 `$ npm install mssql`
@@ -19,4 +19,4 @@ step 16: go to network services tab (i did 64 bit)
 step 17: right click on TCP/IP services -> set to enable
 step 18: save configuration
 step 19: restart services or restart computer
-step 20: try running server, if database connects and server doesn't start, change port to 8080 in endpoints.js
+step 20: try running server, if database connects and server doesn't start, change port to 8080 in endpoints.js```
