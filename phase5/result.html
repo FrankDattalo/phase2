@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Phase 5 - {{url}}</title>
+    </head>
+    <body>
+        <center>
+            <pre>
+                <h2><a href="/">Home</a> - {{url}}</h2>
+                <table border="1" cellpadding="15">
+                    <tr><td>{{query}}</td></tr>
+                </table>
+                {{#if rows}}
+                    <table border="1" cellpadding="15">
+                        {{#each header}}
+                            <th>{{this}}</th>
+                        {{/each}}
+                        {{#each rows}}
+                            <tr>
+                            {{#each this}}
+                                <td>{{this}}</td>
+                            {{/each}}
+                            </tr>
+                        {{/each}}
+                    </table>
+                {{/if}}
+            </pre>
+        </center>
+    </body>
+</html>

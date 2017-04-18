@@ -1,33 +1,26 @@
 const http  = require('http');
 const fs    = require('fs');
 const sql   = require('mssql');
+const hb    = require('handlebars');
 
-function mapArray(array, aroundElement) {
-    return array.map((item) => `<${aroundElement}>${item}</${aroundElement}>`).reduce((total, item) => total + item, '');
+function bindToTemplate(templateFileName, templateData, callback) {
+    fs.readFile(templateFileName, 'utf8', function(fileError, template) {
+        if(fileError) {
+            callback(fileError);
+        } else {
+            callback(false, hb.compile(template)(templateData));
+        }
+    });
 }
 
-function begin(response, tableHeadersArray, query, url) {
-    const headers = tableHeadersArray ? mapArray(tableHeadersArray, 'th'): '';
-
-    response.totalResponse = 
-    `<!DOCTYPE html><html><head><title>Phase 5 - ${url}</title></head><body><center>
-        <pre>
-            <h2><a href="/">Home</a> - ${url}</h2>
-            <table border="1" cellpadding="15">
-                <tr><td>${query}</td></tr>
-            </table>
-            <table border="1" cellpadding="15">
-                ${headers}`;
-}
-
-function row(response, rowArray) {
-    const rowhtml = mapArray(rowArray, 'td');
-    response.totalResponse += `<tr>${rowhtml}</tr>`;
-}
-
-function end(response) {
-    response.totalResponse += `</table></pre></center></body></html>`;
-    response.end(response.totalResponse);
+function sendResponse(response, file, templateData) {
+    bindToTemplate(file, templateData, function(error, result) {
+        if(error) {
+            response.end(`${error}`);
+        } else {
+            response.end(result);
+        }
+    });
 }
 
 function query(queryToExec, callback) {
@@ -36,30 +29,12 @@ function query(queryToExec, callback) {
 
 function send404(request, response, message) {
     response.statusCode = 404;
-    if(!message) {
-        message = `No mapping for ${request.url}`;
-    }
-    response.end(`<!DOCTYPE html><html><body>${message}</body></html>`);
+    sendResponse('./error.html', response, message);
 }
 
 function send500(request, response, message) {
     response.statusCode = 500;
-    if(!message) {
-        message = `Internal Server Error for ${request.url}`;
-    }
-    response.end(`<!DOCTYPE html><html><body>${message}</body></html>`);
-
-}
-
-function noResult(response, url, query) {
-    response.end(
-    `<!DOCTYPE html><html><head><title>Phase 5 - ${url}</title></head><body><center>
-        <pre>
-            <h2><a href="/">Home</a> - ${url}</h2>
-            <table border="1" cellpadding="15">
-                <tr><td>${query}</td></tr>
-            </table>
-        </pre></center></body></html>`)
+    sendResponse('./error.html', response, message);
 }
 
 function handleStatic(endpoint, request, response) {
@@ -82,8 +57,13 @@ function handleDynamic(endpoint, request, response) {
     console.log(`Responding with dynamic content at endpoint: ${endpoint.url}`);
     try {
         fs.readFile(`.${endpoint.url}.sql`, 'utf8', function(fileError, queryString) {
+            if(fileError) {
+                response.end(`${fileError}`);
+            }
+
             console.log("Executing query: ")
             console.log(queryString);
+
             query(queryString, function (queryError, queryData) {
                 if(queryError) {
                     response.end(`${queryError}`);
@@ -91,17 +71,29 @@ function handleDynamic(endpoint, request, response) {
                 }
 
                 if(endpoint.noResult) {
-                    noResult(response, endpoint.url, queryString);
+                    sendResponse(response, './result.html', {
+                        url: endpoint.url,
+                        query: queryString
+                    });
                     return;
                 }
 
-                begin(response, endpoint.columnNames, queryString, endpoint.url);
+                fs.readFile('./result.html', 'utf8', function(fileError, file) {
+                    if(fileError) {
+                        response.end(`${fileError}`);
+                    }
 
-                queryData.recordset.map(dataElement => 
-                    endpoint.columns.map(name => dataElement[name])
-                ).forEach(dataElement => row(response, dataElement));
+                    const data = queryData.recordset.map(item => endpoint.columns.map(colName => item[colName]));
 
-                end(response);
+                    const compiled = hb.compile(file);
+                    
+                    response.end(compiled({
+                        headers: endpoint.headers,
+                        query: queryString,
+                        url: endpoint.url,
+                        rows: data
+                    }));
+                });
             });
         });
     } catch (e) {
