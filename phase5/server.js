@@ -48,6 +48,18 @@ function send500(request, response, message) {
         message = `Internal Server Error for ${request.url}`;
     }
     response.end(`<!DOCTYPE html><html><body>${message}</body></html>`);
+
+}
+
+function noResult(response, url, query) {
+    response.end(
+    `<!DOCTYPE html><html><head><title>Phase 5 - ${url}</title></head><body><center>
+        <pre>
+            <h2><a href="/">Home</a> - ${url}</h2>
+            <table border="1" cellpadding="15">
+                <tr><td>${query}</td></tr>
+            </table>
+        </pre></center></body></html>`)
 }
 
 function handleStatic(endpoint, request, response) {

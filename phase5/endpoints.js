@@ -35,6 +35,14 @@ const endpoints = [
         url: '/query6',
         columnNames: ['Branch Id'],
         columns: ['branchId']   
+    },
+    {
+        url: '/load',
+        noResult: true
+    },
+    {
+        url: '/drop',
+        noResult: true
     }
 ];
 
