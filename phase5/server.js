@@ -88,7 +88,7 @@ function handleDynamic(endpoint, request, response) {
                     const compiled = hb.compile(file);
                     
                     response.end(compiled({
-                        headers: endpoint.headers,
+                        headers: endpoint.columnNames,
                         query: queryString,
                         url: endpoint.url,
                         rows: data
