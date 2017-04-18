@@ -3,7 +3,7 @@ step 1: clone the repo
 step 2: cd into this phone 
 step 3: install mssql & handlebars
 ```
-`$ npm install mssql`
+`$ npm install mssql` <br/>
 `$ npm install handlebars`
 ```
 step 4: Open SQLServer Management Studio
