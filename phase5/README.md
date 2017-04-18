@@ -1,3 +1,4 @@
+```
 step 1: clone the repo
 step 2: cd into this phone 
 step 3: install mssql & handlebars
