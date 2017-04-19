@@ -1,0 +1,112 @@
+body {
+    padding-top: 90px;
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 250px;
+    font-family: 'Roboto', sans-serif;
+}
+
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.navbar-default {
+  background-color: #304e60;
+  border-color: #2b4555;
+}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ecf0f1;
+  background-color: #2b4555;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ecf0f1;
+  background-color: #2b4555;
+}
+.navbar-default .navbar-toggle {
+  border-color: #2b4555;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #2b4555;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ecf0f1;
+}
+
+/* Page */
+center {
+    margin-top: 4vh;
+}
+
+/* Footer */
+.footer {
+  font-family: 'Roboto', sans-serif;
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  left: 0;
+  background-color: #304e60;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.footer .right {
+    float: right;
+}
+.footer h4 {
+    color: hsl(168, 52%, 50%);
+    font-weight: 300;
+}
+.footer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.footer ul a {
+      color: white;
+}
+
+.sub-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #2b4555;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  line-height: 20px;
+  text-align: center;
+}

@@ -16,8 +16,11 @@
             text-align: center;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" 
             rel="stylesheet" integrity="sha384-Li5uVfY2bSkD3WQyiHX8tJd0aMF91rMrQP5aAewFkHkVSTT2TmD2PehZeMmm7aiL" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,46 +29,73 @@
     <![endif]-->
   </head>
   <body>
-      <nav class="navbar navbar-default navbar-static-top">
+      <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Hotel</a>
+                <a class="navbar-brand" href="/"><i class="fa fa-bed" aria-hidden="true"></i> Hotel</a>
             </div>
         </div>
       </nav>
       <div class="container">
-          <center>
-        <table cellpadding="15" class="table">
-            <th>Query #</th><th>Description</th><th>Run Query</th>
-            <tr>
-                <td>Load</td><td>Loads the data</td><td><a href="/load" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Drop</td><td>Drops the database</td><td><a href="/drop" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 1</td><td>Retrieve the names of all people who attended events but did not reserve rooms</td><td><a href="/query1" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 2</td><td>Select names of customers who have both reserved a room for an event and for stay</td><td><a href="/query2" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 3</td><td>Select number, id, and address of branch and amount of people currently staying at that branch</td><td><a href="/query3" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 4</td><td>Names of customers who have attended a specific event</td><td><a href="/query4" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 5</td><td>Retrieve the name and number of branch and total purchase cost for the past 1000 days</td><td><a href="/query5" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 6</td><td>Retrieve the branch ID's of branches that have room types of donald or baller</td><td><a href="/query6" class="btn btn-default">Run</a></td>
-            </tr>
-            <tr>
-                <td>Query 7</td><td>Retrieve the room numbers and room status of rooms that were not reserved by customers for stay</td><td><a href="/query7" class="btn btn-default">Run</a></td>
-            </tr>
-        </table>
+        <center>
+            <table cellpadding="15" class="table">
+                <th>Query #</th><th>Description</th><th>Run Query</th>
+                <tr>
+                    <td>Load</td><td>Loads the data</td><td><a href="/load" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Drop</td><td>Drops the database</td><td><a href="/drop" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 1</td><td>Retrieve the names of all people who attended events but did not reserve rooms</td><td><a href="/query1" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 2</td><td>Select names of customers who have both reserved a room for an event and for stay</td><td><a href="/query2" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 3</td><td>Select number, id, and address of branch and amount of people currently staying at that branch</td><td><a href="/query3" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 4</td><td>Names of customers who have attended a specific event</td><td><a href="/query4" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 5</td><td>Retrieve the name and number of branch and total purchase cost for the past 1000 days</td><td><a href="/query5" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 6</td><td>Retrieve the branch ID's of branches that have room types of donald or baller</td><td><a href="/query6" class="btn btn-default">Run</a></td>
+                </tr>
+                <tr>
+                    <td>Query 7</td><td>Retrieve the room numbers and room status of rooms that were not reserved by customers for stay</td><td><a href="/query7" class="btn btn-default">Run</a></td>
+                </tr>
+            </table>
+        </center>
       </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                <div class="col-md-6 about">
+                    <h4>About</h4>
+                    <p>This is a website for demonstrating SQL queries on a hotel database. The types of queries available to run include a union, intersection, difference, division, aggregation, inner join and outer join. Clicking "Run" will display the results of that query.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="right">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:dattalo.2@osu.edu?Subject=DB%20Phase%205">Frank Dattalo</a></li>
+                        <li><a href="mailto:kuszmaul.12@osu.edu?Subject=DB%20Phase%205">Kurtis Kuszmaul</a></li>
+                        <li><a href="mailto:stewart.1455@osu.edu?Subject=DB%20Phase%205">Alec Stewart</a></li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </footer>
+        <footer class="sub-footer">
+            <div class="container">
+                Made with <i class="fa fa-heart-o" style="color: #FF6E40;"></i> by Frank Dattalo, Kurtis Kuszmaul and Alec Stewart</a>
+            </div>
+        </footer>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
