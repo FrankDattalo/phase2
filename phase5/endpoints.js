@@ -37,6 +37,11 @@ const endpoints = [
         columns: ['branchId']   
     },
     {
+        url: '/query7',
+        columnNames: ['Room #', 'Status'],
+        columns: ['roomNo', 'status']   
+    },
+    {
         url: '/load',
         noResult: true
     },
