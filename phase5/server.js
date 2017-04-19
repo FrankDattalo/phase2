@@ -51,6 +51,10 @@ function handleStatic(endpoint, request, response) {
             return;
         }
 
+        if(endpoint.mime) {
+            response.setHeader('Content-Type', endpoint.mime);
+        }
+
         response.end(data);
     });
 }

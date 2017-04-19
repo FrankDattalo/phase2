@@ -2,6 +2,11 @@ const { run }   = require('./server.js');
 
 const endpoints = [
     {
+        url: '/style.css',
+        static: true,
+        mime: 'text/css'
+    },
+    {
         url: '/',
         static: true,
         fileLocation: './index.html'
